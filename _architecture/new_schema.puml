@@ -1,0 +1,55 @@
+@startuml
+
+actor Клиент as Client
+
+package FilmService as FS {
+    component Nginx
+
+    database PostgreSQL
+    database ElasticSearch
+    database Redis
+
+    package "Admin Panel" as AP {
+        component Django
+        component moviesETL
+    }
+    package "AuthAPI" as Auth {
+        component AuthFastAPI
+    }
+    package "AsyncAPI" as Async {
+        component AsyncFastAPI
+    }
+    package "UGC" as UGC {
+        component Kafka
+        component ugcETL
+        component ClickHouse
+    }
+
+}
+
+left to right direction
+Client --> Nginx
+
+Nginx --> Django: Панель администратора
+moviesETL <--> PostgreSQL: Обновление данных
+moviesETL <--> ElasticSearch: Обновление данных
+Django --> PostgreSQL
+
+Nginx --> AuthFastAPI: Авторизация
+AuthFastAPI <--> PostgreSQL
+AuthFastAPI <--> Redis: флаги и просроченные токены
+
+Nginx --> AsyncFastAPI: Поиск
+
+AsyncFastAPI --> AuthFastAPI: проверка авторизации
+AsyncFastAPI --> ElasticSearch: Запрос на поиск
+AsyncFastAPI --> Redis: Кэширование запросов
+AsyncFastAPI --> Kafka: сохранить историю просмотра
+AsyncFastAPI --> ClickHouse: Аналитика
+
+Nginx --> AsyncFastAPI: Аналитика
+
+
+Kafka <--> ugcETL: обновление данных
+ugcETL <-> ClickHouse: обновление данных
+@enduml
