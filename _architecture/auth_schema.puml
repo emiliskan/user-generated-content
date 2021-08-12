@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+User -> Nginx: Поиск по фильмам
+Nginx -> AsyncAPI
+AsyncAPI -> AuthAPI: Authorize Request
+AuthAPI --> AsyncAPI: Ошибка сервиса
+AsyncAPI --> User: Фильмы для анонимных пользователей
+
+AuthAPI --> AsyncAPI: пользователь не авторизован
+AsyncAPI --> User: Авторизуйтесь
+
+AuthAPI --> AsyncAPI: пользователь авторизован, вот его роли
+AsyncAPI --> User: Фильмы для пользователя
+
+@enduml

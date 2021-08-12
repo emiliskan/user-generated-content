@@ -1,0 +1,43 @@
+@startuml
+
+actor Клиент as Client
+
+package FilmService as FS {
+    component Nginx
+
+    database PostgreSQL
+    database ElasticSearch
+    database Redis
+
+    package "Admin Panel" as AP {
+        component Django
+        component ETL
+    }
+    package "AuthAPI" as Auth {
+        component AuthFastAPI
+    }
+    package "AsyncAPI" as Async {
+        component AsyncFastAPI
+    }
+
+}
+
+left to right direction
+Client --> Nginx
+
+Nginx --> Django: Панель администратора
+ETL <--> PostgreSQL: Обновление данных
+ETL <--> ElasticSearch: Обновление данных
+Django --> PostgreSQL
+
+Nginx --> AuthFastAPI: Авторизация
+AuthFastAPI <--> PostgreSQL
+AuthFastAPI <--> Redis
+
+Nginx --> AsyncFastAPI: Поиск
+
+AsyncFastAPI --> AuthFastAPI: проверка авторизации
+AsyncFastAPI --> ElasticSearch: Запрос на поиск
+AsyncFastAPI --> Redis: Кэширование
+
+@enduml
