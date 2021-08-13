@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  etl:
+    build: .
+    image: etl
+    restart: always
+
+networks:
+  movies-api-network:
+    name: movies-api-network
+    driver: bridge
