@@ -1,0 +1,42 @@
+[
+  {
+    "id": "31cecdfc-3a35-4ca6-8816-47456f6e513e",
+    "name": "Sport"
+  },
+  {
+    "id": "d503ec11-1c12-49c7-9279-513c4cc64fc2",
+    "name": "Sci-Fi"
+  },
+  {
+    "id": "da49379c-bc25-43a4-bb94-945fa5bfdd9f",
+    "name": "Animation"
+  },
+  {
+    "id": "f71638f5-728c-4bdf-a1a8-24070639c91e",
+    "name": "Biography"
+  },
+  {
+    "id": "37d9244e-907a-4448-b0cd-e9b2f68f9479",
+    "name": "Mystery"
+  },
+  {
+    "id": "57fbe194-8e31-4231-a333-4236c3f1ea40",
+    "name": "Crime"
+  },
+  {
+    "id": "c4720929-dfe2-46da-8c83-efd0f9e6af58",
+    "name": "Documentary"
+  },
+  {
+    "id": "e602c3b5-9d18-4c54-8271-50054e20d467",
+    "name": "News"
+  },
+  {
+    "id": "7d5cca7f-ef4a-495c-a3eb-c4b6146c5c08",
+    "name": "Game-Show"
+  },
+  {
+    "id": "6e5d2100-7f14-41f3-9c56-7c262543de7c",
+    "name": "Short"
+  }
+]
