@@ -7,7 +7,9 @@ logging_config.dictConfig(LOGGING)
 
 PROJECT_NAME = os.getenv("PROJECT_NAME", "movies")
 
-KAFKA_SERVERS = ['localhost:9092']
+KAFKA_HOST = os.getenv("KAFKA_HOST", "localhost")
+KAFKA_PORT = os.getenv("KAFKA_PORT", "9092")
+KAFKA_SERVERS = [f'{KAFKA_HOST}:{KAFKA_PORT}']
 
 # AUTH
 AUTH_HOST = os.getenv("AUTH_HOST", "auth-api")
