@@ -21,6 +21,7 @@ package FilmService as FS {
     }
     package "UGC" as UGC {
         component Kafka
+        component ugcAPI
         component ugcETL
         component ClickHouse
     }
@@ -44,11 +45,11 @@ Nginx --> AsyncFastAPI: Поиск
 AsyncFastAPI --> AuthFastAPI: проверка авторизации
 AsyncFastAPI --> ElasticSearch: Запрос на поиск
 AsyncFastAPI --> Redis: Кэширование запросов
-AsyncFastAPI --> Kafka: сохранить историю просмотра
-AsyncFastAPI --> ClickHouse: Аналитика
 
-Nginx --> AsyncFastAPI: Аналитика
 
+Nginx --> ugcAPI: данные о просмотрах фильмов
+ugcAPI --> AuthFastAPI: проверка авторизации
+ugcAPI -->Kafka: данные о просмотрах фильмов
 
 Kafka <--> ugcETL: обновление данных
 ugcETL <-> ClickHouse: обновление данных
