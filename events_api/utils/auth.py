@@ -18,12 +18,6 @@ class UserNotFound:
     ...
 
 
-class ServerError:
-    ...
-
-
-class AuthTokenRequired:
-    ...
 
 
 def giveup_handler(details):
@@ -36,13 +30,11 @@ def giveup_handler(details):
                       factor=BACKOFF_FACTOR,
                       on_giveup=giveup_handler)
 async def get_user_info(token):
-    if token is None:
-        raise AuthTokenRequired
 
     async with aiohttp.ClientSession() as session:
 
         headers = {
-            "Authorization": f"Bearer {token}",
+            "Authorization": token,
             "X-Request-Id": str(uuid.uuid4()),
         }
 
@@ -51,5 +43,3 @@ async def get_user_info(token):
                 return await response.json()
             if response.status == 404:
                 raise UserNotFound
-            else:
-                raise ServerError

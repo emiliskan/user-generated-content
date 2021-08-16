@@ -12,7 +12,7 @@ KAFKA_PORT = os.getenv("KAFKA_PORT", "9092")
 KAFKA_SERVERS = [f'{KAFKA_HOST}:{KAFKA_PORT}']
 
 # AUTH
-AUTH_HOST = os.getenv("AUTH_HOST", "auth-api")
+AUTH_HOST = os.getenv("AUTH_HOST", "localhost")
 AUTH_PORT = os.getenv("AUTH_PORT", "5000")
 AUTH_ENDPOINT = os.getenv("AUTH_ENDPOINT", "api/v1/user")
 AUTH_URL = f"http://{AUTH_HOST}:{AUTH_PORT}/{AUTH_ENDPOINT}"

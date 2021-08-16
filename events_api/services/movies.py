@@ -1,22 +1,26 @@
 from functools import lru_cache
 from fastapi import Depends
-from kafka import KafkaProducer
 
-from db.kafka_producer import get_kafka
+from db.event_storage import get_storage, EventStorage
 
 
 class MoviesService:
 
-    def __init__(self, kafka):
-        self.kafka: KafkaProducer = kafka
+    def __init__(self, storage):
+        self.storage: EventStorage = storage
 
     async def save_movie_progress(self, movie_id: str, user_id: str, viewed_frame: str) -> None:
-        self.kafka.send(
-            topic="movies_progress",
-            key=str.encode(movie_id+user_id, 'utf-8'),
-            value=str.encode(viewed_frame, 'utf-8'))
+        self.storage.save(
+            document="movies_progress",
+            key=movie_id+user_id,
+            value={
+                "user_id": user_id,
+                "movie_id": movie_id,
+                "viewed_frame": viewed_frame
+            }
+        )
 
 
 @lru_cache(maxsize=128)
-def get_movies_service(kafka: KafkaProducer = Depends(get_kafka)) -> MoviesService:
-    return MoviesService(kafka)
+def get_movies_service(storage: EventStorage = Depends(get_storage)) -> MoviesService:
+    return MoviesService(storage)

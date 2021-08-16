@@ -1,12 +1,15 @@
 import logging
 
 import uvicorn as uvicorn
+from fastapi import FastAPI
+from fastapi.responses import ORJSONResponse
+from kafka import KafkaProducer
+
 from api.v1 import movies_api
 from core import config
 from core.logger import LOGGING
-from db.kafka_producer import kafka_producer_client
-from fastapi import FastAPI
-from fastapi.responses import ORJSONResponse
+from db import event_storage
+
 
 app = FastAPI(
     title=config.PROJECT_NAME,
@@ -18,14 +21,16 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    pass
+    event_storage.storage = event_storage.KafkaStorage(
+        KafkaProducer(bootstrap_servers=config.KAFKA_SERVERS)
+    )
 
 app.include_router(movies_api.router, prefix="/v1/movies", tags=["Movies"])
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    await kafka_producer_client.close()
+    event_storage.storage.close()
 
 
 if __name__ == "__main__":

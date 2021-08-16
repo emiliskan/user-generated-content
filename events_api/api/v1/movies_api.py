@@ -4,7 +4,7 @@ from http import HTTPStatus
 from fastapi import APIRouter, Depends, HTTPException, Header
 
 from services.movies import MoviesService, get_movies_service
-from utils.auth import get_user_info, UserNotFound, AuthServiceUnavailable, ServerError, AuthTokenRequired
+from utils.auth import get_user_info, UserNotFound, AuthServiceUnavailable
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -21,13 +21,11 @@ async def save_movie_progress(
         movie_service: MoviesService = Depends(get_movies_service),
 ) -> None:
 
-    token = Authorization.replace("Bearer ", "")
+    if Authorization is None:
+        raise HTTPException(status_code=HTTPStatus.NETWORK_AUTHENTICATION_REQUIRED, detail="Auth token required.")
+
     try:
-        user_info = await get_user_info(token)
-    except AuthTokenRequired:
-        raise HTTPException(status_code=HTTPStatus.NETWORK_AUTHENTICATION_REQUIRED)
-    except ServerError:
-        raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR)
+        user_info = await get_user_info(Authorization)
     except AuthServiceUnavailable:
         raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
     except UserNotFound:

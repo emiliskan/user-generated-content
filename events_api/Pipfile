@@ -8,6 +8,8 @@ fastapi = "*"
 aiohttp = "*"
 backoff = "*"
 kafka-python = "==2.0.2"
+orjson = "*"
+uvicorn = "*"
 
 [dev-packages]
 
