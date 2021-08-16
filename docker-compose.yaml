@@ -32,7 +32,7 @@ services:
   ucg-api:
     container_name: ucg-api
     build:
-      context: events_api/
+      context: ucg_api/
     restart: unless-stopped
     ports:
       - 8000:8000
