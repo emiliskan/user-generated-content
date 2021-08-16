@@ -1,0 +1,23 @@
+# AUTH
+FLASK_APP=app:create_app('configs.production_config.ProductionConfig')
+POSTGRES_HOST=auth-db
+POSTGRES_USER=user
+POSTGRES_PORT=5432
+POSTGRES_PASSWORD=password
+REDIS_HOST=auth-redis
+REDIS_PORT=6379
+JAEGER_HOST=jaeger
+SECRET_KEY=wwwaaaaaaat
+JWT_SECRET_KEY=wat-lol
+GOOGLE_CLIENT_ID=a
+GOOGLE_CLIENT_SECRET=b
+YANDEX_CLIENT_ID=c
+YANDEX_CLIENT_SECRET=d
+
+# UCG_API
+KAFKA_HOST=rc1a-jlaasbdr5b0v6bmk.mdb.yandexcloud.net
+KAFKA_PORT=9091
+AUTH_HOST=auth-api
+AUTH_PORT=5000
+AUTH_ENDPOINT=api/v1/user
+BACKOFF_FACTOR=0.5
