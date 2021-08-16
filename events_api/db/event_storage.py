@@ -5,7 +5,6 @@ from typing import Union
 from kafka import KafkaProducer
 
 
-
 class EventStorage(ABC):
     """ Абстрактный класс для хранилищ """
 
@@ -49,6 +48,3 @@ storage: Union[EventStorage, None] = None
 
 def get_storage() -> EventStorage:
     return storage
-
-
-

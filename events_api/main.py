@@ -1,6 +1,6 @@
 import logging
 
-import uvicorn as uvicorn
+import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from kafka import KafkaProducer
@@ -41,4 +41,11 @@ async def shutdown():
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, log_config=LOGGING, log_level=logging.DEBUG, reload=True)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        log_config=LOGGING,
+        log_level=logging.DEBUG,
+        reload=True
+    )

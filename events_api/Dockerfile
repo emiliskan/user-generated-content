@@ -1,5 +1,5 @@
 FROM python:3.9
-ENV POETRY_VIRTUALENVS_CREATE=false
+
 ENV PYTHONPATH "${PYTHONPATH}:/app/"
 ENV PATH="${PATH}:/root/.local/bin"
 
