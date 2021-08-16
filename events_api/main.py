@@ -22,7 +22,14 @@ app = FastAPI(
 @app.on_event("startup")
 async def startup():
     event_storage.storage = event_storage.KafkaStorage(
-        KafkaProducer(bootstrap_servers=config.KAFKA_SERVERS)
+        KafkaProducer(
+            bootstrap_servers=config.KAFKA_SERVERS,
+            security_protocol="SASL_SSL",
+            sasl_mechanism=config.KAFKA_SASL_MECHANISM,
+            sasl_plain_password=config.KAFKA_SASL_PLAIN_PASSWORD,
+            sasl_plain_username=config.KAFKA_SASL_PLAIN_USERNAME,
+            ssl_cafile=config.KAFKA_SSL_CAFILE
+        )
     )
 
 app.include_router(movies_api.router, prefix="/v1/movies", tags=["Movies"])

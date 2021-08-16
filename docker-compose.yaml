@@ -8,8 +8,6 @@ services:
   auth-db:
     container_name: auth-db
     image: postgres
-    ports:
-      - 5432:5432
     networks:
       - movies-network
     <<: *x-env
@@ -19,23 +17,25 @@ services:
     image: redis
     networks:
       - movies-network
+
   auth-api:
     container_name: auth-api
     build:
       context: auth/
-    ports:
-      - 5000:5000
     networks:
       - movies-network
     depends_on:
       - auth-db
       - auth-redis
     <<: *x-env
+
   ucg-api:
     container_name: ucg-api
     build:
       context: events_api/
     restart: unless-stopped
+    ports:
+      - 8000:8000
     networks:
       - movies-network
     depends_on:

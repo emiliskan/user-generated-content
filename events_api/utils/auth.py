@@ -10,14 +10,12 @@ from aiohttp import ClientConnectionError
 from core.config import AUTH_BACKOFF_TIME, AUTH_URL, BACKOFF_FACTOR
 
 
-class AuthServiceUnavailable:
+class AuthServiceUnavailable(BaseException):
     ...
 
 
-class UserNotFound:
+class UserNotFound(BaseException):
     ...
-
-
 
 
 def giveup_handler(details):
@@ -41,5 +39,7 @@ async def get_user_info(token):
         async with session.get(AUTH_URL, headers=headers) as response:
             if response.status == 200:
                 return await response.json()
-            if response.status == 404:
+            elif response.status == 404:
                 raise UserNotFound
+            else:
+                raise AuthServiceUnavailable
