@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+aiohttp = "*"
+backoff = "*"
+kafka-python = "==2.0.2"
+orjson = "*"
+uvicorn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
