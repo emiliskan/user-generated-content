@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS benchmarks_db.events ON CLUSTER 'company_cluster' (
     user_id      UUID,
     movie_id     UUID,
     viewed_frame INTEGER,
-    event_time DateTime
 )
 ENGINE = ReplicatedMergeTree('/clickhouse/tables/{cluster}/{shard}/table', '{replica}')
 PARTITION BY toDateTime(event_time)
