@@ -1,9 +1,10 @@
 import logging
 
 import uvicorn
+from aiokafka.helpers import create_ssl_context
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-from kafka import KafkaProducer
+from aiokafka import AIOKafkaProducer
 
 from api.v1 import movies_api
 from core import config
@@ -21,16 +22,18 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    event_storage.storage = event_storage.KafkaStorage(
-        KafkaProducer(
+    context = create_ssl_context(
+        cafile=config.KAFKA_SSL_CAFILE,
+    )
+    producer = AIOKafkaProducer(
             bootstrap_servers=config.KAFKA_SERVERS,
             security_protocol="SASL_SSL",
             sasl_mechanism=config.KAFKA_SASL_MECHANISM,
             sasl_plain_password=config.KAFKA_SASL_PLAIN_PASSWORD,
             sasl_plain_username=config.KAFKA_SASL_PLAIN_USERNAME,
-            ssl_cafile=config.KAFKA_SSL_CAFILE
-        )
+            ssl_context=context
     )
+    event_storage.storage = event_storage.KafkaStorage(producer)
 
 app.include_router(movies_api.router, prefix="/v1/movies", tags=["Movies"])
 

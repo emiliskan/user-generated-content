@@ -10,7 +10,7 @@ class MoviesService:
         self.storage: EventStorage = storage
 
     async def save_movie_progress(self, movie_id: str, user_id: str, viewed_frame: str) -> None:
-        self.storage.save(
+        await self.storage.save(
             document="movies_progress",
             key=movie_id+user_id,
             value={
