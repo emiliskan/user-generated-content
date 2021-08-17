@@ -8,6 +8,7 @@ import backoff
 from aiohttp import ClientConnectionError
 
 from core.config import AUTH_BACKOFF_TIME, AUTH_URL, BACKOFF_FACTOR
+from models.user import User
 
 
 class AuthServiceUnavailable(BaseException):
@@ -27,8 +28,7 @@ def giveup_handler(details):
                       max_time=AUTH_BACKOFF_TIME,
                       factor=BACKOFF_FACTOR,
                       on_giveup=giveup_handler)
-async def get_user_info(token):
-
+async def get_user_info(token: str) -> User:
     async with aiohttp.ClientSession() as session:
 
         headers = {
@@ -38,7 +38,7 @@ async def get_user_info(token):
 
         async with session.get(AUTH_URL, headers=headers) as response:
             if response.status == 200:
-                return await response.json()
+                return User(**await response.json())
             elif response.status == 404:
                 raise UserNotFound
             else:
