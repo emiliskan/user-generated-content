@@ -38,24 +38,21 @@ user_stat
 import argparse
 import datetime
 import random
-import sys
 import time
-import uuid
+import sys
 from typing import Iterator, List
 
 from clickhouse_driver import Client
 
-from config import (CLICKHOUSE_HOST, UNIQUE_IDS, MAX_MOVIE_DURATION,
-                    BATCH_SIZE, BATCH_COUNT, BENCHMARK_ITERATIONS, REQUESTS)
+from research.config import (CLICKHOUSE_HOST, BATCH_SIZE, BATCH_COUNT,
+                             BENCHMARK_ITERATIONS, CLICKHOUSE_REQUESTS,
+                             FAKE_USER_IDS, FAKE_MOVIE_IDS, MAX_MOVIE_DURATION)
 
 client = Client(CLICKHOUSE_HOST)
-FAKE_USER_IDS = [uuid.uuid4() for _ in range(UNIQUE_IDS)]
-FAKE_MOVIE_IDS = [uuid.uuid4() for _ in range(UNIQUE_IDS)]
 
 
 def generate_row() -> dict:
     return {
-        'id': uuid.uuid4(),
         'user_id': random.choice(FAKE_USER_IDS),
         'movie_id': random.choice(FAKE_MOVIE_IDS),
         'viewed_frame': random.randint(1, MAX_MOVIE_DURATION),
@@ -130,4 +127,4 @@ if __name__ == "__main__":
         fill_in_database(BATCH_SIZE, BATCH_COUNT)
 
     if argv.bench:
-        run_benchmarks(REQUESTS, argv.iter, argv.verbose)
+        run_benchmarks(CLICKHOUSE_REQUESTS, argv.iter, argv.verbose)
