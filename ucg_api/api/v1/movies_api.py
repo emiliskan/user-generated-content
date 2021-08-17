@@ -31,5 +31,5 @@ async def save_movie_progress(
     except UserNotFound:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="User not found")
 
-    await movie_service.save_movie_progress(movie_id, user_info["id"], viewed_frame)
+    await movie_service.save_movie_progress(movie_id, user_info.id, viewed_frame)
 
