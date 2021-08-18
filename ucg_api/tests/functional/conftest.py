@@ -4,9 +4,7 @@ import pytest
 import aiohttp
 import asyncio
 
-from aiokafka.helpers import create_ssl_context
 from multidict import CIMultiDictProxy
-from aiokafka import AIOKafkaConsumer
 
 import settings
 
@@ -28,23 +26,6 @@ async def session():
 @pytest.fixture(scope="session")
 def event_loop():
     return asyncio.get_event_loop()
-
-
-@pytest.fixture(scope="session")
-async def kafka_consumer():
-    context = create_ssl_context(
-        cafile=settings.KAFKA_SSL_CAFILE,
-    )
-    client = AIOKafkaConsumer(
-            bootstrap_servers=settings.KAFKA_SERVERS,
-            security_protocol=settings.KAFKA_SECURITY_PROTOCOL,
-            sasl_mechanism=settings.KAFKA_SASL_MECHANISM,
-            sasl_plain_password=settings.KAFKA_SASL_PLAIN_PASSWORD,
-            sasl_plain_username=settings.KAFKA_SASL_PLAIN_USERNAME,
-            ssl_context=context
-    )
-    yield client
-    await client.stop()
 
 
 @pytest.fixture

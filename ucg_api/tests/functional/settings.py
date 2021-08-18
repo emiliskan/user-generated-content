@@ -3,12 +3,3 @@ import os
 API_SERVICE_URL = "localhost:8000"
 AUTH_SERVICE_URL = "localhost:5000"
 API = "v1"
-
-KAFKA_HOST = os.getenv("KAFKA_HOST", "rc1a-mi7khra801ifkpfs.mdb.yandexcloud.net")
-KAFKA_PORT = os.getenv("KAFKA_PORT", "9091")
-KAFKA_SERVERS = [f'{KAFKA_HOST}:{KAFKA_PORT}']
-KAFKA_SECURITY_PROTOCOL = "SASL_SSL"
-KAFKA_SASL_MECHANISM = os.getenv("KAFKA_SASL_MECHANISM", "SCRAM-SHA-512")
-KAFKA_SASL_PLAIN_PASSWORD = os.getenv("KAFKA_SASL_PLAIN_PASSWORD", "aaaaaaaa")
-KAFKA_SASL_PLAIN_USERNAME = os.getenv("KAFKA_SASL_PLAIN_USERNAME", "ucg_api")
-KAFKA_SSL_CAFILE = os.getenv("KAFKA_SSL_CAFILE", "$HOME/.kafka/CA.crt")

@@ -4,7 +4,7 @@ API_URL = 'movies/save_movie_progress'
 
 
 @pytest.mark.asyncio
-async def test_save_movie_progress(make_get_request, kafka_consumer, auth):
+async def test_save_movie_progress(make_get_request, auth):
     movie_id = 1
     viewed_frame = 1000
 
@@ -17,9 +17,4 @@ async def test_save_movie_progress(make_get_request, kafka_consumer, auth):
         headers=headers
     )
     assert response.status == 200, "UCG service unavailable"
-    await kafka_consumer.start()
-    try:
-        async for msg in kafka_consumer:
-            assert msg.value == viewed_frame
-    finally:
-        await kafka_consumer.stop()
+
