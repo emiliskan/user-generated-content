@@ -5,22 +5,18 @@ import time
 import backoff
 
 from kafka import KafkaConsumer
-from clickhouse_driver import Client as ClickHouseClient
 from setting import (ETL_BACKOFF_MAX_TIME, ETL_STORAGE_TABLE, BATCH_SIZE,
-                     FLUSH_PERIOD, IDLE_TIMEOUT, KAFKA_DSN, CLICKHOUSE_DSN)
+                     FLUSH_PERIOD, IDLE_TIMEOUT, KAFKA_DSN, KAFKA_TOPICS,
+                     CLICKHOUSE_DSN)
 
+from storage import get_current_storage
 # TODO add logger
 logger = None
 
 
 @backoff.on_exception(backoff.expo, ConnectionError, max_time=ETL_BACKOFF_MAX_TIME)
-def connect_storage(dns: dict) -> ClickHouseClient:
-    return ClickHouseClient(**dns)
-
-
-@backoff.on_exception(backoff.expo, ConnectionError, max_time=ETL_BACKOFF_MAX_TIME)
-def connect_consumer(dns: dict) -> KafkaConsumer:
-    return KafkaConsumer(**dns)
+def connect_consumer(topics: str, dns: dict) -> KafkaConsumer:
+    return KafkaConsumer(topics, **dns)
 
 
 def transform(value: str) -> dict:
@@ -35,8 +31,8 @@ def transform(value: str) -> dict:
 
 
 def start_etl():
-    consumer = connect_consumer(KAFKA_DSN)
-    storage = connect_storage(CLICKHOUSE_DSN)
+    consumer = connect_consumer(KAFKA_TOPICS, KAFKA_DSN)
+    storage = get_current_storage(CLICKHOUSE_DSN)
 
     flush_time_stamp = time.time()
     values = []
@@ -44,14 +40,15 @@ def start_etl():
         record = transform(msg.value)
         values.append(record)
 
-        if len(values) > BATCH_SIZE or (time.time() - flush_time_stamp) > FLUSH_PERIOD:
-            storage.execute(f"INSERT INTO {ETL_STORAGE_TABLE} VALUES",
-                            values, types_check=True)
+        if (len(values) > BATCH_SIZE or
+                (time.time() - flush_time_stamp) > FLUSH_PERIOD):
+            storage.load(ETL_STORAGE_TABLE, values)
             values.clear()
             flush_time_stamp = time.time()
+
+    if len(values):
+        time.sleep(IDLE_TIMEOUT)
 
 
 if __name__ == "__main__":
     start_etl()
-
-

@@ -4,7 +4,7 @@ services:
   etl:
     build: .
     image: etl
-    restart: always
+    restart: on-failure
 
 networks:
   movies-api-network:
