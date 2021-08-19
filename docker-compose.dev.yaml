@@ -2,7 +2,7 @@ version: "3"
 
 x-env: &x-env
   env_file:
-  - env
+  - env_dev
 
 
 services:
@@ -23,7 +23,7 @@ services:
     networks:
       - movies-network
   auth-api:
-    container_name: auth-api
+    container_name: auth-api-dev
     build:
       context: auth/
     ports:

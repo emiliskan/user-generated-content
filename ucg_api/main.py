@@ -27,7 +27,7 @@ async def startup():
     )
     producer = AIOKafkaProducer(
             bootstrap_servers=config.KAFKA_SERVERS,
-            security_protocol="SASL_SSL",
+            security_protocol=config.KAFKA_SECURITY_PROTOCOL,
             sasl_mechanism=config.KAFKA_SASL_MECHANISM,
             sasl_plain_password=config.KAFKA_SASL_PLAIN_PASSWORD,
             sasl_plain_username=config.KAFKA_SASL_PLAIN_USERNAME,
