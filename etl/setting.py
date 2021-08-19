@@ -1,11 +1,17 @@
 import os
+import yaml
+import pathlib
 
 BATCH_SIZE = 2
 FLUSH_PERIOD = 5
 IDLE_TIMEOUT = 5
 
-ETL_BACKOFF_MAX_TIME = int(os.environ.get("ETL_BACKOFF_MAX_TIME", 300))
 
+logconfig = pathlib.Path(__file__).parent.joinpath("logger_config.yaml")
+with open(logconfig) as stream:
+    LOGGER_CONFIG = yaml.safe_load(stream)
+
+ETL_BACKOFF_MAX_TIME = int(os.environ.get("ETL_BACKOFF_MAX_TIME", 300))
 
 KAFKA_HOST = os.environ.get("KAFKA_HOST", "rc1a-mi7khra801ifkpfs.mdb.yandexcloud.net")
 KAFKA_PORT = os.environ.get("KAFKA_PORT", "9091")
@@ -21,10 +27,10 @@ KAFKA_DSN = {
     "group_id": os.environ.get("KAFKA_CONSUMER_GROUP", "echo-messages-to-stdout"),
     "bootstrap_servers": KAFKA_SERVERS,
     "security_protocol": KAFKA_SECURITY_PROTOCOL,
-    "sasl_mechanism" : KAFKA_SASL_MECHANISM,
-    "sasl_plain_password" : KAFKA_SASL_PLAIN_PASSWORD,
-    "sasl_plain_username" : KAFKA_SASL_PLAIN_USERNAME,
-    "ssl_cafile" : KAFKA_SSL_CAFILE,
+    "sasl_mechanism": KAFKA_SASL_MECHANISM,
+    "sasl_plain_password": KAFKA_SASL_PLAIN_PASSWORD,
+    "sasl_plain_username": KAFKA_SASL_PLAIN_USERNAME,
+    "ssl_cafile": KAFKA_SSL_CAFILE,
     "auto_offset_reset": "earliest",
 }
 

@@ -1,5 +1,5 @@
 import abc
-
+from typing import List
 import backoff
 from clickhouse_driver import Client
 import clickhouse_driver.errors
@@ -12,7 +12,7 @@ class Storage(abc.ABC):
         return self
 
     @abc.abstractmethod
-    def load(self, values: list[dict]):
+    def load(self, values: List[dict]):
         pass
 
 
@@ -24,8 +24,9 @@ class ClickHouseClient(Storage):
     @backoff.on_exception(backoff.expo,
                           clickhouse_driver.errors.SocketTimeoutError,
                           max_time=ETL_BACKOFF_MAX_TIME)
-    def load(self, values: list[dict]):
-        self.client.execute(f'INSERT INTO {self.storage_table} VALUES', values, types_check=True)
+    def load(self, values: List[dict]):
+        self.client.execute(f'INSERT INTO {self.storage_table} VALUES',
+                            values, types_check=True)
 
 
 def get_current_storage() -> Storage:

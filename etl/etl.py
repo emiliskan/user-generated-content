@@ -2,19 +2,24 @@ import datetime
 import json
 import time
 import uuid
+import logging
+
+import logging.config
 
 import backoff
 from kafka import KafkaConsumer
 
-from setting import (ETL_BACKOFF_MAX_TIME, BATCH_SIZE,
+from setting import (ETL_BACKOFF_MAX_TIME, BATCH_SIZE, LOGGER_CONFIG,
                      FLUSH_PERIOD, IDLE_TIMEOUT, KAFKA_DSN, KAFKA_TOPICS)
 
 from storage import get_current_storage
-# TODO add logger
-logger = None
+
+logging.config.dictConfig(LOGGER_CONFIG)
+logger = logging.getLogger("ugc_etl")
 
 
-@backoff.on_exception(backoff.expo, ConnectionError, max_time=ETL_BACKOFF_MAX_TIME)
+@backoff.on_exception(backoff.expo, ConnectionError,
+                      max_time=ETL_BACKOFF_MAX_TIME)
 def connect_consumer(topics: str, dns: dict) -> KafkaConsumer:
     return KafkaConsumer(topics, **dns)
 
@@ -33,7 +38,10 @@ def transform(value: str) -> dict:
 
 def start_etl():
     consumer = connect_consumer(KAFKA_TOPICS, KAFKA_DSN)
+    logger.info("connect to consumer")
+
     storage = get_current_storage()
+    logger.info("connect to storage")
 
     while True:
         flush_time_stamp = time.time()
@@ -47,15 +55,18 @@ def start_etl():
                 try:
                     storage.load(values)
                 except Exception as e:
-                    print(e)
+                    logger.error(e)
+                else:
+                    values.clear()
+                    logger.info("data is uploaded to storage")
 
-                values.clear()
                 flush_time_stamp = time.time()
-                print(f"Loaded")
 
         if len(values):
+            logger.info(f"no data, idle {IDLE_TIMEOUT} s")
             time.sleep(IDLE_TIMEOUT)
 
 
 if __name__ == "__main__":
+    logger.info("start ugc etl")
     start_etl()
