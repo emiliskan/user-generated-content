@@ -1,13 +1,13 @@
 import datetime
 import json
 import time
+import uuid
 
 import backoff
-
 from kafka import KafkaConsumer
-from setting import (ETL_BACKOFF_MAX_TIME, ETL_STORAGE_TABLE, BATCH_SIZE,
-                     FLUSH_PERIOD, IDLE_TIMEOUT, KAFKA_DSN, KAFKA_TOPICS,
-                     CLICKHOUSE_DSN)
+
+from setting import (ETL_BACKOFF_MAX_TIME, BATCH_SIZE,
+                     FLUSH_PERIOD, IDLE_TIMEOUT, KAFKA_DSN, KAFKA_TOPICS)
 
 from storage import get_current_storage
 # TODO add logger
@@ -22,32 +22,39 @@ def connect_consumer(topics: str, dns: dict) -> KafkaConsumer:
 def transform(value: str) -> dict:
     value = json.loads(value)
     record = {
+        'id': str(uuid.uuid4()),
         'user_id': str(value.get('user_id')),
         'movie_id': str(value.get('movie_id')),
         'viewed_frame': int(value.get('viewed_frame')),
-        'created_at': datetime.datetime.now(),
+        'event_time': datetime.datetime.now(),
     }
     return record
 
 
 def start_etl():
     consumer = connect_consumer(KAFKA_TOPICS, KAFKA_DSN)
-    storage = get_current_storage(CLICKHOUSE_DSN)
+    storage = get_current_storage()
 
-    flush_time_stamp = time.time()
-    values = []
-    for msg in consumer:
-        record = transform(msg.value)
-        values.append(record)
+    while True:
+        flush_time_stamp = time.time()
+        values = []
+        for msg in consumer:
+            record = transform(msg.value)
+            values.append(record)
 
-        if (len(values) > BATCH_SIZE or
-                (time.time() - flush_time_stamp) > FLUSH_PERIOD):
-            storage.load(ETL_STORAGE_TABLE, values)
-            values.clear()
-            flush_time_stamp = time.time()
+            if (len(values) > BATCH_SIZE or
+                    (time.time() - flush_time_stamp) > FLUSH_PERIOD):
+                try:
+                    storage.load(values)
+                except Exception as e:
+                    print(e)
 
-    if len(values):
-        time.sleep(IDLE_TIMEOUT)
+                values.clear()
+                flush_time_stamp = time.time()
+                print(f"Loaded")
+
+        if len(values):
+            time.sleep(IDLE_TIMEOUT)
 
 
 if __name__ == "__main__":
