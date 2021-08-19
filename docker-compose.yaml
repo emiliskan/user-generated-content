@@ -5,34 +5,10 @@ x-env: &x-env
   - env
 
 services:
-  auth-db:
-    container_name: auth-db
-    image: postgres
-    networks:
-      - movies-network
-    <<: *x-env
-
-  auth-redis:
-    container_name: auth-redis
-    image: redis
-    networks:
-      - movies-network
-
-  auth-api:
-    container_name: auth-api
-    build:
-      context: auth/
-    networks:
-      - movies-network
-    depends_on:
-      - auth-db
-      - auth-redis
-    <<: *x-env
-
   ucg-api:
     container_name: ucg-api
     build:
-      context: ucg_api/
+      context: ugс_api/
     restart: unless-stopped
     ports:
       - 8000:8000
@@ -40,6 +16,13 @@ services:
       - movies-network
     depends_on:
       - auth-api
+    <<: *x-env
+  etl:
+    build:
+      context: etl/
+    image: ugc_etl
+    container_name: ugc_etl
+    restart: on-failure
     <<: *x-env
 
 networks:
