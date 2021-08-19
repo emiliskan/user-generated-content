@@ -29,17 +29,27 @@ def event_loop():
 
 
 @pytest.fixture
-def auth(make_post_request):
-    async def inner():
+def auth(make_post_request) -> str:
+    """
+    Authorize user in auth service
+    :param make_post_request:
+    :return: Access token
+    """
+    data = {
+        "username": "test_user",
+        "password": "asJDjDahJKjdHsd",
+        "email": "email@yandex.ru"
+    }
+    url = f"{settings.AUTH_SERVICE_URL}/api/v1/user"
+    response = await make_post_request(url, data)
+
+    # if we already have user
+    if "accessToken" not in response.body:
         url = f"{settings.AUTH_SERVICE_URL}/api/v1/auth"
-        data = {
-          "username": "alex2",
-          "password": "password"
-        }
         response = await make_post_request(url, data)
-        assert response.status == 200, "something wrong with auth service."
-        return response.body["accessToken"]
-    return inner
+
+    assert response.status == 200, "something wrong with auth service."
+    return response.body["accessToken"]
 
 
 @pytest.fixture
@@ -60,7 +70,7 @@ def make_get_request(session):
 def make_post_request(session):
     async def inner(url: str, data: dict = None, headers: dict = None) -> HTTPResponse:
         url = f"http://{url}"
-        async with session.post(url, data=data, headers=headers) as response:
+        async with session.post(url, json=data, headers=headers) as response:
             return HTTPResponse(
                 body=await response.json(),
                 headers=response.headers,
