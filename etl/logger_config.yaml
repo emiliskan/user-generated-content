@@ -1,0 +1,21 @@
+version: 1
+formatters:
+  default:
+    format: "[%(asctime)s]\t[%(name)s]\t[%(levelname)s]\t%(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: default
+    stream: ext://sys.stderr
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: default
+    filename: /var/log/ugc/etl.log
+loggers:
+  ugc_etl:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: no

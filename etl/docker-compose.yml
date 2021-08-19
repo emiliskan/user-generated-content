@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  etl:
+    build: .
+    image: ugc_etl
+    container_name: ugc_etl
+    restart: on-failure
+    environment:
+      - PYTHONUNBUFFERED=1
+
+networks:
+  movies-api-network:
+    name: movies-api-network
+    driver: bridge
