@@ -15,6 +15,9 @@
 ```shell
 git clone https://github.com/vctecc/Auth_sprint_2
 cd Auth_sprint_2
+```
+Задаем **SECRET_KEY** и **JWT_SECRET_KEY**
+```
 docker compose up --build
 ```
 
