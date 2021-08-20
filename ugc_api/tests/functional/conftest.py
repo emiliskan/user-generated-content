@@ -29,7 +29,7 @@ def event_loop():
 
 
 @pytest.fixture
-def auth(make_post_request) -> str:
+async def auth(make_post_request) -> str:
     """
     Authorize user in auth service
     :param make_post_request:
@@ -38,13 +38,14 @@ def auth(make_post_request) -> str:
     data = {
         "username": "test_user",
         "password": "asJDjDahJKjdHsd",
-        "email": "email@yandex.ru"
+        "email": "test_user@yandex.ru"
     }
     url = f"{settings.AUTH_SERVICE_URL}/api/v1/user"
     response = await make_post_request(url, data)
 
     # if we already have user
-    if "accessToken" not in response.body:
+    if response.status != 200:
+        del data["email"]
         url = f"{settings.AUTH_SERVICE_URL}/api/v1/auth"
         response = await make_post_request(url, data)
 

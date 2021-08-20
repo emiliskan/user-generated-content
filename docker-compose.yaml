@@ -5,17 +5,17 @@ x-env: &x-env
   - env
 
 services:
-  ucg-api:
-    container_name: ucg-api
+  ugc-api:
+    container_name: ugc-api
     build:
-      context: ugс_api/
+      context: ugc_api/
+    volumes:
+      - ./ugc_api/:/app/
     restart: unless-stopped
     ports:
       - 8000:8000
     networks:
       - movies-network
-    depends_on:
-      - auth-api
     <<: *x-env
   etl:
     build:
@@ -24,8 +24,20 @@ services:
     container_name: ugc_etl
     restart: on-failure
     <<: *x-env
+  nginx:
+    container_name: ugc-nginx
+    image: nginx:1.19.5
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/configs:/etc/nginx/conf.d:ro
+    ports:
+      - 5001:80
+    depends_on:
+      - ugc-api
+    networks:
+      - movies-network
 
 networks:
   movies-network:
-    name: movies-network
+    name: movies-api-network
     driver: bridge
