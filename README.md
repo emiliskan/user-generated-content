@@ -28,8 +28,6 @@ docker compose up --build
 ```shell
 docker compose up --build
 ```
-# Тесты
-
 
 # ClickHouse, Kafka
 
