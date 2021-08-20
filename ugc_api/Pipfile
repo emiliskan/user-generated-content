@@ -6,12 +6,13 @@ name = "pypi"
 [packages]
 fastapi = "*"
 aiohttp = "*"
-clickhouse-driver = "*"
 backoff = "*"
-kafka-python = "==2.0.2"
 orjson = "*"
 uvicorn = "*"
 aiokafka = "*"
+pytest = "*"
+pytest-cases = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 
