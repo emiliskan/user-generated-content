@@ -2,9 +2,11 @@ import logging
 
 import uvicorn
 from aiokafka.helpers import create_ssl_context
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import ORJSONResponse
 from aiokafka import AIOKafkaProducer
+import sentry_sdk
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 
 from api.v1 import movies_api
 from core import config
@@ -18,6 +20,9 @@ app = FastAPI(
     openapi_url="/api/openapi.json",
     default_response_class=ORJSONResponse,
 )
+
+
+sentry_sdk.init(dsn=config.SENTRY_DSN)
 
 
 @app.on_event("startup")
@@ -35,6 +40,7 @@ async def startup():
     )
     event_storage.storage = event_storage.KafkaStorage(producer)
 
+
 app.include_router(movies_api.router, prefix="/v1/movies", tags=["Movies"])
 
 
@@ -42,6 +48,7 @@ app.include_router(movies_api.router, prefix="/v1/movies", tags=["Movies"])
 async def shutdown():
     event_storage.storage.close()
 
+app = SentryAsgiMiddleware(app)
 
 if __name__ == "__main__":
     uvicorn.run(

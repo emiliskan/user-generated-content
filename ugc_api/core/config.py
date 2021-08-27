@@ -5,6 +5,7 @@ from core.logger import LOGGING
 
 logging_config.dictConfig(LOGGING)
 
+
 PROJECT_NAME = os.getenv("PROJECT_NAME", "movies")
 
 KAFKA_HOST = os.getenv("KAFKA_HOST", "rc1a-mi7khra801ifkpfs.mdb.yandexcloud.net")
@@ -24,3 +25,6 @@ AUTH_URL = f"http://{AUTH_HOST}:{AUTH_PORT}/{AUTH_ENDPOINT}"
 AUTH_BACKOFF_TIME = int(os.getenv("AUTH_BACKOFF_TIME", 10))
 
 BACKOFF_FACTOR = float(os.getenv("BACKOFF_FACTOR", 0.5))
+
+# LOGGING
+SENTRY_DSN = os.getenv("SENTRY_DSN", "https://985de561392e4d6391fb209958b7eda5@o977346.ingest.sentry.io/5933885")
