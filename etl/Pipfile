@@ -9,6 +9,7 @@ backoff = "*"
 pyyaml = "*"
 kafka-python = "==2.0.2"
 sentry-sdk = "*"
+python-logstash = "*"
 
 [dev-packages]
 

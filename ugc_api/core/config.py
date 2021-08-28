@@ -28,3 +28,4 @@ BACKOFF_FACTOR = float(os.getenv("BACKOFF_FACTOR", 0.5))
 
 # LOGGING
 SENTRY_DSN = os.getenv("SENTRY_DSN", "https://985de561392e4d6391fb209958b7eda5@o977346.ingest.sentry.io/5933885")
+LOGSTASH_PORT = 5044
