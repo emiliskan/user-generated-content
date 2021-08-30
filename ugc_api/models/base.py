@@ -12,7 +12,7 @@ def orjson_dumps(v, *, default):
 
 
 class AbstractModel(BaseModel):
-    id: UUID = Field(alias='_id', default=uuid4)  # TODO add validation for UUID
+    id: UUID = Field(alias='_id', default=uuid4)
 
     class Config:
         arbitrary_types_allowed = True
