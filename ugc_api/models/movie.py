@@ -5,7 +5,7 @@ from uuid import UUID
 from models.base import AbstractModel
 
 
-class Review(AbstractModel):
+class Movie(AbstractModel):
     rating: int
     scores: List[UUID]
     scores_quality: int
