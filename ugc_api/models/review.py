@@ -1,16 +1,17 @@
 from datetime import datetime
 from typing import List
+from uuid import UUID
 
 from models.base import AbstractModel
 from pydantic import Field
 
 
 class Review(AbstractModel):
-    user_id: str  # TODO add validation for UUID
-    movie_id: str
+    user_id: UUID
+    movie_id: UUID
     pub_date: datetime
     text: str = Field(max_length=1000)
-    movie_score_id: str
+    movie_score_id: UUID
     rating: int
-    scores: List[str]
+    scores: List[UUID]
     scores_quality: int

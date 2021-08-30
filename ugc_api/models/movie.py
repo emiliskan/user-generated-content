@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import List
+from uuid import UUID
 
 from models.base import AbstractModel
-from pydantic import Field
 
 
 class Review(AbstractModel):
     rating: int
-    scores: List[str]
+    scores: List[UUID]
     scores_quality: int
-    reviews: List[str]
+    reviews: List[UUID]

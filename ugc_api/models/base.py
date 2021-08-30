@@ -1,12 +1,9 @@
-from typing import Optional
-from uuid import uuid4
+from uuid import uuid4, UUID
 
 import orjson
 from bson import ObjectId
 
 from pydantic import BaseModel, Field
-
-from utils.pyobjectid import PyObjectId
 
 
 def orjson_dumps(v, *, default):
@@ -15,7 +12,7 @@ def orjson_dumps(v, *, default):
 
 
 class AbstractModel(BaseModel):
-    id: PyObjectId = Field(alias='_id', default=uuid4)  # TODO add validation for UUID
+    id: UUID = Field(alias='_id', default=uuid4)  # TODO add validation for UUID
 
     class Config:
         arbitrary_types_allowed = True
