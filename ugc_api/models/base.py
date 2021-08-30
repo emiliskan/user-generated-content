@@ -1,6 +1,12 @@
-import orjson
+from typing import Optional
+from uuid import uuid4
 
-from pydantic import BaseModel
+import orjson
+from bson import ObjectId
+
+from pydantic import BaseModel, Field
+
+from utils.pyobjectid import PyObjectId
 
 
 def orjson_dumps(v, *, default):
@@ -9,7 +15,13 @@ def orjson_dumps(v, *, default):
 
 
 class AbstractModel(BaseModel):
-    id: str
+    id: PyObjectId = Field(alias='_id', default=uuid4)  # TODO add validation for UUID
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
 
     class Meta:
         # Заменяем стандартную работу с json на более быструю
