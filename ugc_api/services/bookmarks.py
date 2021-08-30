@@ -37,6 +37,6 @@ class UserBookmarksService(BaseService):
 
 @lru_cache()
 def get_user_bookmarks_service(
-        storage: Storage = Depends(get_current_storage),
+        storage: Storage = Depends(get_current_storage(db='ugc_db', collection="user_bookmarks")),
 ) -> UserBookmarksService:
     return UserBookmarksService(UserBookmarks, storage)
