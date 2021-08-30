@@ -1,26 +1,29 @@
 import logging
 
 from fastapi import APIRouter
+from pymongo import MongoClient
+
+from models import Review
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
-@router.post("/reviews/{movie_id}")
-async def create_review():
+@router.post("/reviews")
+async def create_review(review: Review):
     pass
 
 
-@router.get("/reviews/{movie_id}")
+@router.get("/reviews/{review_id}")
 async def get_review():
     pass
 
 
-@router.delete("/reviews/{movie_id}")
+@router.delete("/reviews/{review_id}")
 async def delete_review():
     pass
 
 
-@router.patch("/reviews/{movie_id}")
+@router.patch("/reviews/{review_id}")
 async def update_review():
     pass

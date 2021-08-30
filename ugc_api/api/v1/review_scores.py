@@ -8,19 +8,19 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
-@router.post("/scores/reviews/{movie_id}",
+@router.post("/scores/reviews/",
              response_model=ReviewScore)
 async def create_review_score():
     pass
 
 
-@router.get("/scores/reviews/{movie_id}",
+@router.get("/scores/reviews/{review_score_id}",
             response_model=ReviewScore)
 async def get_review_score():
     pass
 
 
-@router.delete("/scores/reviews/{movie_id}",
+@router.delete("/scores/reviews/{review_score_id}",
                response_model=ReviewScore)
 async def delete_review_score():
     pass

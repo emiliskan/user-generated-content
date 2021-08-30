@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
 
-from api.v1 import scores, bookmarks, reviews
+from api.v1 import movie_scores, review_scores, bookmarks, reviews
 from core import config
 from core.logger import LOGGING
 
@@ -17,9 +17,10 @@ app = FastAPI(
 )
 
 
-app.include_router(bookmarks.router, prefix="/v1/user", tags=["Bookmarks"])
-app.include_router(scores.router, prefix="/v1/user", tags=["Scores"])
-app.include_router(reviews.router, prefix="/v1/user", tags=["Reviews"])
+app.include_router(bookmarks.router, prefix="/api/v1", tags=["Bookmarks"])
+app.include_router(review_scores.router, prefix="/api/v1", tags=["ReviewScores"])
+app.include_router(movie_scores.router, prefix="/api/v1", tags=["MovieScores"])
+app.include_router(reviews.router, prefix="/api/v1", tags=["Reviews"])
 
 
 if __name__ == "__main__":
