@@ -1,7 +1,8 @@
 import datetime
 import uuid
 import random
-
+import functools
+import time
 from typing import List, Tuple
 
 from config import *
@@ -132,3 +133,44 @@ def upload_movies_and_reviews(db):
             print(f"load movies: {idx}")
 
     print("Done!")
+
+
+def get_random_field(db, collection, name="_id"):
+    return db.get_collection(collection).aggregate(
+        [{"$sample": {"size": 1}}]).next().get(name)
+
+
+def inc_avg_mean(avg, cnt, val):
+    """
+    update arithmetic mean
+    :param avg: old value
+    :param cnt: member count
+    :param val: new value
+    """
+    return (avg + val) / (cnt + 1)
+
+
+def benchmark(iterations: int = 1):
+    def decorator(func):
+        @functools.wraps(func)
+        def inner(*args, **kwargs):
+            times = []
+            last_result = None
+
+            for _ in range(iterations):
+                start_time = time.perf_counter()
+                last_result = func(*args, **kwargs)
+                end_time = time.perf_counter()
+                times.append(end_time - start_time)
+
+            full_time = sum(times)
+            avg_time = full_time / iterations
+
+            print(f"Test name: {func.__name__}")
+            print(f"Test iterations: {iterations}")
+            print(f"Full time: {full_time} s")
+            print(f"Avg time: {avg_time:.4f} s")
+            print(f'Last result:\n {last_result}\n')
+
+        return inner
+    return decorator
