@@ -3,14 +3,14 @@ import logging
 from fastapi import APIRouter
 from pymongo import MongoClient
 
-from models import Review
+from models.review import Review
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
 @router.post("/reviews")
-async def create_review(review: Review):
+async def create_review():
     pass
 
 
