@@ -13,6 +13,8 @@ aiokafka = "*"
 pytest = "*"
 pytest-cases = "*"
 pytest-asyncio = "*"
+sentry-sdk = "*"
+python-logstash = "*"
 
 [dev-packages]
 
