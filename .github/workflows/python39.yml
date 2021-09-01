@@ -31,13 +31,13 @@ jobs:
       - name: Linters
         run: |
           flake8 . --format=html --htmldir=flake-report
-      name: Deploy to GitHub Pages
 
       - name: Check typing
         run: |
           mypy --install-types --non-interactive ./ugc_api
 
       if: failure()
+      name: Deploy to GitHub Pages
       uses: crazy-max/ghaction-github-pages@v2
       with:
         target_branch: gh-pages
