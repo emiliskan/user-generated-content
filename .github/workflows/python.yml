@@ -24,24 +24,24 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install wemake-python-styleguide flake8-html
-          pip install mypy
+          pip install mypy lxml
           pip install types-aiofiles types-certifi types-ujson
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Linters
         run: |
-          flake8 . --format=html --htmldir=flake-report
+          flake8 . --format=html --htmldir=reports/flake-report
 
       - name: Check typing
         run: |
-          mypy --install-types --non-interactive ./ugc_api
+          mypy --install-types --non-interactive . --html-report reports/mypy-report
 
       - name: Deploy to GitHub Pages
         if: failure()
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
-          build_dir: flake-report
+          build_dir: reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
