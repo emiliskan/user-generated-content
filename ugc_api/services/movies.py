@@ -1,7 +1,10 @@
 from functools import lru_cache
+
 from fastapi import Depends
 
 from db.event_storage import get_storage, EventStorage
+
+
 
 
 class MoviesService:
