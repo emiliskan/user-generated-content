@@ -30,11 +30,11 @@ jobs:
 
       - name: Linter checks
         run: |
-          flake8 --diff --format=html --htmldir=flake-report
+          flake8 . --format=html --htmldir=flake-report
       - uses: actions/upload-artifact@v2
         with:
           name: flake-report
-          path: flake-report/
+          path: ./flake-report
 
       - name: Check UGC service types with mypy
         run: |
