@@ -27,14 +27,21 @@ jobs:
           pip install mypy lxml
           pip install types-aiofiles types-certifi types-ujson
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Make dirs for reports
+        run: |
+          mkdir reports
+          cd reports
+          mkdir flake-report
+          mkdir mypy-report
 
       - name: Linters
         run: |
-          flake8 . --format=html --htmldir=reports/flake-report
+          flake8 . --format=html --htmldir=flake-report
 
       - name: Check typing
         run: |
-          mypy --install-types --non-interactive . --html-report reports/mypy-report
+          mkdir reports/mypy-report
+          mypy --install-types --non-interactive . --html-report mypy-report
 
       - name: Deploy to GitHub Pages
         if: failure()
