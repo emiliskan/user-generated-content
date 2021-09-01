@@ -28,4 +28,4 @@ jobs:
       with:
           reporter: 'github-pr-check'
       env:
-        GITHUB_TOKEN: ${{ secrets.github_token }}
+        GITHUB_TOKEN: ${{ secrets.wemake_token }}
