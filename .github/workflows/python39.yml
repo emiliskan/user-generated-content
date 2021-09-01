@@ -30,7 +30,8 @@ jobs:
 
       - name: Linters
         uses: tayfun/flake8-your-pr@1.0.1
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
       - name: Check typing
         run: |
           mypy --install-types --non-interactive ./ugc_api
