@@ -14,7 +14,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+       with:
+          fetch-depth: 2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -30,7 +31,7 @@ jobs:
 
       - name: Linters
         run: |
-          git diff origin/main HEAD | flake8 --diff --format=html --htmldir=reports/flake-report
+          git diff main HEAD | flake8 --diff --format=html --htmldir=reports/flake-report
 
       - name: Check typing
         if: always()
