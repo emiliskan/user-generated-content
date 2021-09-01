@@ -1,5 +1,15 @@
 @startuml
-
+<style>
+    package {
+        RoundCorner 10
+    }
+    component {
+        RoundCorner 10
+    }
+    arrow {
+      LineThickness 1.5
+    }
+</style>
 actor Клиент as Client
 
 package FilmService as FS {
@@ -8,6 +18,7 @@ package FilmService as FS {
     database PostgreSQL
     database ElasticSearch
     database Redis
+    database MongoDB
 
     package "Admin Panel" as AP {
         component Django
@@ -19,13 +30,15 @@ package FilmService as FS {
     package "AsyncAPI" as Async {
         component AsyncFastAPI
     }
-    package "UGC" as UGC {
+    package "UGA" as UGA {
         component Kafka
-        component ugcAPI
-        component ugcETL
+        component ugaAPI
+        component ugaETL
         component ClickHouse
     }
-
+    package "UGC" as UGC {
+        component ugcAPI
+    }
 }
 
 left to right direction
@@ -38,19 +51,19 @@ Django --> PostgreSQL
 
 Nginx --> AuthFastAPI: Авторизация
 AuthFastAPI <--> PostgreSQL
-AuthFastAPI <--> Redis: флаги и просроченные токены
+AuthFastAPI <--> Redis: Данные о токенах
 
 Nginx --> AsyncFastAPI: Поиск
-
 AsyncFastAPI --> AuthFastAPI: проверка авторизации
 AsyncFastAPI --> ElasticSearch: Запрос на поиск
 AsyncFastAPI --> Redis: Кэширование запросов
 
+Nginx --> ugaAPI: Пользовательская активность
+ugaAPI --> Kafka: Данные о просмотрах фильмов
+Kafka <--> ugaETL: Обновление данных
+ugaETL <-> ClickHouse
 
-Nginx --> ugcAPI: данные о просмотрах фильмов
-ugcAPI --> AuthFastAPI: проверка авторизации
-ugcAPI -->Kafka: данные о просмотрах фильмов
-
-Kafka <--> ugcETL: обновление данных
-ugcETL <-> ClickHouse: обновление данных
+Nginx --> ugcAPI: Пользовательский контент
+ugcAPI --> AuthFastAPI: Проверка авторизации
+ugcAPI --> MongoDB: Данные о закладках, оценках и отзывах
 @enduml
