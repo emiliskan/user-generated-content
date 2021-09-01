@@ -36,12 +36,12 @@ jobs:
 
       - name: Linters
         run: |
-          flake8 . --format=html --htmldir=flake-report
+          flake8 . --format=html --htmldir=reports/flake-report
 
       - name: Check typing
+        if: always()
         run: |
-          mkdir reports/mypy-report
-          mypy --install-types --non-interactive . --html-report mypy-report
+          mypy --install-types --non-interactive . --html-report reports/mypy-report
 
       - name: Deploy to GitHub Pages
         if: failure()
