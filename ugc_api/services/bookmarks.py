@@ -8,13 +8,16 @@ from models import UserBookmarks
 
 class UserBookmarksService(BaseService):
     async def add(self, user_id, movie_id):
-        pass
+        old_bookmarks = await self.storage.get({"_id": user_id})
+        bookmarks = old_bookmarks["bookmarks"].push(movie_id)
+        self.storage.update({"_id": user_id}, {"bookmarks": bookmarks})
 
     async def remove(self, user_id, movie_id):
         pass
 
     async def get(self, user_id):
-        pass
+        old_bookmarks = self.storage.get({"_id": user_id})
+        return old_bookmarks["bookmarks"]
 
 
 @lru_cache()

@@ -1,3 +1,4 @@
+import json
 import uuid
 
 import aiohttp
@@ -25,12 +26,13 @@ def giveup_handler(details):
                       on_giveup=giveup_handler)
 async def get_user_id(token: str) -> str:
     async with aiohttp.ClientSession() as session:
-
+        token = f"Bearer {token}"
         headers = {"Authorization": token}
 
         async with session.get(AUTH_URL, headers=headers) as response:
             if response.status == 200:
-                return await response.json()["id"]
+                response_body = await response.text()
+                return json.loads(response_body)["id"]
             elif response.status == 404:
                 raise UserNotFound
             else:

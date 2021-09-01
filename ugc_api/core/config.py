@@ -14,3 +14,8 @@ AUTH_URL = f"http://{AUTH_HOST}:{AUTH_PORT}/{AUTH_ENDPOINT}"
 AUTH_BACKOFF_TIME = int(os.getenv("AUTH_BACKOFF_TIME", 10))
 
 BACKOFF_FACTOR = float(os.getenv("BACKOFF_FACTOR", 0.5))
+
+MONGO_HOST = os.getenv("MONGO_HOST", "localhost")
+MONGO_PORT = os.getenv("MONGO_PORT", 27017)
+MONGO_DB = os.getenv("MONGO_DB", "ugc_db")
+MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", "movies")
