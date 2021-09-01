@@ -28,13 +28,6 @@ jobs:
           pip install types-aiofiles types-certifi types-ujson
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - uses: wemake-services/wemake-python-styleguide@master
-        with:
-          reporter: 'github-pr-review'
-          path: './ugc_api'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Lint with Lint-action
         uses: wearerequired/lint-action@v1
         with:
