@@ -31,7 +31,7 @@ jobs:
 
       - name: Linters
         run: |
-          git diff main HEAD | flake8 --diff --format=html --htmldir=reports/flake-report
+          flake8 --diff --format=html --htmldir=reports/flake-report
 
       - name: Check typing
         if: always()
