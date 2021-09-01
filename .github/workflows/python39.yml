@@ -20,18 +20,34 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
+      - name: Install dependencies for UGC
         run: |
           python -m pip install --upgrade pip
           pip install wemake-python-styleguide flake8-html
           pip install mypy
           pip install types-aiofiles types-certifi types-ujson
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
       - uses: wemake-services/wemake-python-styleguide@master
         with:
           reporter: 'github-pr-review'
+          path: './ugc_api'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint with Lint-action
+        uses: wearerequired/lint-action@v1
+        with:
+          flake8: true
+          flake8_dir: ./ugc_api
+          flake8_args: >
+            --max-complexity=10
+            --max-line-length=127
+            --inline-quotes=double
+            --extend-ignore=D1,WPS305,WPS306
+            --per-file-ignores=core/logger.py:WPS226,WPS323
+            --nested-classes-whitelist=Config
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check UGC service types with mypy
         run: |
