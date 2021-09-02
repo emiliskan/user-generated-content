@@ -1,36 +1,32 @@
-""" Модуль для работы с хранилищем событий. """
-
-from typing import Union, Optional
-from abc import ABC, abstractmethod
 import json
+from abc import ABC, abstractmethod
+from typing import Union
 
 from aiokafka import AIOKafkaProducer
 
-
 class EventStorage(ABC):
-    """ Абстрактный класс для хранилищ. """
+    """ Абстрактный класс для хранилищ """
 
     @abstractmethod
     async def save(self, document: str, key: str, value: Union[str, dict]) -> None:
         """
-        Функция записи в хранилище.
-
-        :param document: Документ записи.
-        :param key: Ключ записи.
-        :param value: Значение записи.
+        Функция записи в хранилище
+        :param document: Документ записи
+        :param key: Ключ записи
+        :param value: Значение записи
         """
         pass
 
     @abstractmethod
     def close(self) -> None:
         """
-        Закрывает соединение с хранилищем.
+        Закрывает соединение с хранилищем
         """
         pass
 
 
 class KafkaStorage(EventStorage):
-    """ Хранилище Kafka. """
+    """ Хранилище Kafka"""
 
     def __init__(self, producer: AIOKafkaProducer):
         self.producer: AIOKafkaProducer = producer
@@ -50,6 +46,5 @@ class KafkaStorage(EventStorage):
 storage: Union[EventStorage, None] = None
 
 
-def get_storage() -> Optional[EventStorage]:
-    """ Текущее хранилище событий """
+def get_storage() -> EventStorage:
     return storage
