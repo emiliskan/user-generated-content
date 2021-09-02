@@ -54,10 +54,6 @@ class AsyncMongoStorage(Storage):
         self.db_client = await get_db_client()
         self.collection = self.db_client[self.db_name][self.collection_name]
 
-    @property
-    async def client(self):
-        return self.db_client[self.db_name][self.collection_name]
-
     async def create(self, document: dict):
         return await self.collection.insert_one(document)
 
