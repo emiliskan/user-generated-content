@@ -37,10 +37,10 @@ jobs:
       - name: Check typing
         if: always()
         run: |
-          mypy $(git diff main —name-only)
+          mypy $(git diff origin/main --name-only)
 
       - name: Deploy to GitHub Pages
-        if: failure()
+        if: always()
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
