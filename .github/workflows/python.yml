@@ -37,7 +37,7 @@ jobs:
       - name: Check typing
         if: always()
         run: |
-          mypy ./ugc_api --ignore-missing-imports --scripts-are-modules --html-report reports/mypy-report
+          mypy $(git diff main —name-only)
 
       - name: Deploy to GitHub Pages
         if: failure()
