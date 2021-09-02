@@ -1,6 +1,6 @@
 import json
 from abc import ABC, abstractmethod
-from typing import Union
+from typing import Union, Optional
 
 from aiokafka import AIOKafkaProducer
 
@@ -46,5 +46,5 @@ class KafkaStorage(EventStorage):
 storage: Union[EventStorage, None] = None
 
 
-def get_storage() -> EventStorage:
+def get_storage() -> Optional[EventStorage]:
     return storage
