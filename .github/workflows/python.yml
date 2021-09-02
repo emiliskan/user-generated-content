@@ -37,7 +37,7 @@ jobs:
       - name: Check typing
         if: always()
         run: |
-          mypy $(git diff origin/main --name-only)
+          mypy $(git diff origin/main --name-only '*.py')
 
       - name: Deploy to GitHub Pages
         if: always()
