@@ -1,4 +1,3 @@
-import os
 from abc import ABC, abstractmethod
 
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -53,24 +52,24 @@ class AsyncMongoStorage(Storage):
 
     async def _asyncinit(self):
         self.db_client = await get_db_client()
+        self.collection = self.db_client[self.db_name][self.collection_name]
 
     @property
     async def client(self):
         return self.db_client[self.db_name][self.collection_name]
 
     async def create(self, document: dict):
-        return await self.client.insert_one(document)
+        return await self.collection.insert_one(document)
 
     async def get(self, spec: dict):
-        client = await self.client
-        found = await client.find_one(spec)
-        return found
+        return await self.collection.find_one(spec)
 
     async def update(self, spec: dict, document: dict):
-        return await self.client.update(spec, document)
+        updated = await self.collection.update_one(spec, document)
+        return updated.matched_count > 0
 
     async def delete(self, spec: dict):
-        return await self.client.delete_one(spec)
+        return await self.collection.delete_one(spec)
 
 
 async def get_current_storage() -> Storage:

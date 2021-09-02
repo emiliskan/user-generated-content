@@ -9,15 +9,30 @@ from models import UserBookmarks
 class UserBookmarksService(BaseService):
     async def add(self, user_id, movie_id):
         old_bookmarks = await self.storage.get({"_id": user_id})
-        bookmarks = old_bookmarks["bookmarks"].push(movie_id)
-        self.storage.update({"_id": user_id}, {"bookmarks": bookmarks})
+        if old_bookmarks:
+            if old_bookmarks["bookmarks"] is None:
+                bookmarks = [movie_id]
+            else:
+                bookmarks = set(old_bookmarks["bookmarks"])
+                bookmarks.add(movie_id)
+            updated = await self.storage.update({"_id": user_id}, {"$set": {"bookmarks": list(bookmarks)}})
+            return updated
+        bookmarks = [movie_id]
+        created = await self.storage.create({"_id": user_id, "bookmarks": bookmarks})
+        return created
 
     async def remove(self, user_id, movie_id):
-        pass
+        old_bookmarks = await self.storage.get({"_id": user_id})
+        if old_bookmarks and old_bookmarks["bookmarks"] is not None:
+            bookmarks = old_bookmarks["bookmarks"]
+            bookmarks.remove(movie_id)
+            updated = await self.storage.update({"_id": user_id}, {"$set": {"bookmarks": bookmarks}})
+            return updated
+        raise Exception("Bookmark doesn't exist")
 
     async def get(self, user_id):
-        old_bookmarks = self.storage.get({"_id": user_id})
-        return old_bookmarks["bookmarks"]
+        old_bookmarks = await self.storage.get({"_id": user_id})
+        return old_bookmarks
 
 
 @lru_cache()
