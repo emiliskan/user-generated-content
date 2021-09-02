@@ -31,12 +31,12 @@ jobs:
 
       - name: Linters
         run: |
-          git diff origin/main | flake8 --diff --format=html --htmldir=reports/flake-report
+          git diff origin/main | flake8 --diff
 
       - name: Check typing
         if: always()
         run: |
-          mypy ./ugc_api --html-report reports/mypy-report
+          mypy ./ugc_api --ignore-missing-imports --scripts-are-modules --html-report reports/mypy-report
 
       - name: Deploy to GitHub Pages
         if: failure()
