@@ -5,12 +5,12 @@ x-env: &x-env
   - env
 
 services:
-  ugc-api:
+  uga-api:
     container_name: ugc-api
     build:
-      context: ugc_api/
+      context: uga_api/
     volumes:
-      - ./ugc_api/:/app/
+      - ./uga_api/:/app/
     restart: unless-stopped
     ports:
       - 8000:8000
@@ -20,7 +20,7 @@ services:
   etl:
     build:
       context: etl/
-    image: ugc_etl
+    image: uga_etl
     container_name: ugc_etl
     restart: on-failure
     <<: *x-env
@@ -33,7 +33,7 @@ services:
     ports:
       - 5001:80
     depends_on:
-      - ugc-api
+      - uga-api
     networks:
       - movies-network
 

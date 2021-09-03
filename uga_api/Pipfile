@@ -9,13 +9,12 @@ aiohttp = "*"
 backoff = "*"
 orjson = "*"
 uvicorn = "*"
-bson = "*"
-motor = "*"
-
-[dev-packages]
+aiokafka = "*"
 pytest = "*"
 pytest-cases = "*"
 pytest-asyncio = "*"
+
+[dev-packages]
 
 [requires]
 python_version = "3.9"

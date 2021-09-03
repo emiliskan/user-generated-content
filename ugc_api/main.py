@@ -1,15 +1,14 @@
 import logging
 
 import uvicorn
-from aiokafka.helpers import create_ssl_context
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-from aiokafka import AIOKafkaProducer
 
-from api.v1 import movies_api
+from db.storage import connect_db, close_db
 from core import config
+from api.v1 import movie_scores, review_scores, bookmarks, reviews
+
 from core.logger import LOGGING
-from db import event_storage
 
 
 app = FastAPI(
@@ -22,26 +21,17 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    context = create_ssl_context(
-        cafile=config.KAFKA_SSL_CAFILE,
-    )
-    producer = AIOKafkaProducer(
-            bootstrap_servers=config.KAFKA_SERVERS,
-            security_protocol=config.KAFKA_SECURITY_PROTOCOL,
-            sasl_mechanism=config.KAFKA_SASL_MECHANISM,
-            sasl_plain_password=config.KAFKA_SASL_PLAIN_PASSWORD,
-            sasl_plain_username=config.KAFKA_SASL_PLAIN_USERNAME,
-            ssl_context=context
-    )
-    event_storage.storage = event_storage.KafkaStorage(producer)
-
-app.include_router(movies_api.router, prefix="/v1/movies", tags=["Movies"])
+    await connect_db(config.MONGO_HOST, config.MONGO_PORT)
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    event_storage.storage.close()
+    await close_db()
 
+app.include_router(bookmarks.router, prefix="/api/v1", tags=["Bookmarks"])
+app.include_router(review_scores.router, prefix="/api/v1", tags=["ReviewScores"])
+app.include_router(movie_scores.router, prefix="/api/v1", tags=["MovieScores"])
+app.include_router(reviews.router, prefix="/api/v1", tags=["Reviews"])
 
 if __name__ == "__main__":
     uvicorn.run(

@@ -4,6 +4,7 @@ from typing import Union
 
 from aiokafka import AIOKafkaProducer
 
+
 class EventStorage(ABC):
     """ Абстрактный класс для хранилищ """
 

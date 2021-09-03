@@ -1,17 +1,26 @@
-import orjson
+from uuid import uuid4, UUID
 
-from pydantic import BaseModel
+import orjson
+from bson import ObjectId
+
+from pydantic import BaseModel, Field
 
 
 def orjson_dumps(v, *, default):
-    # orjson.dumps retuns bytes, but pydantic requires unicode
+    # orjson.dumps возвращает bytes, а pydantic требует unicode, поэтому декодируем
     return orjson.dumps(v, default=default).decode()
 
 
 class AbstractModel(BaseModel):
-    id: str
+    id: UUID = Field(alias='_id', default=uuid4())
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
 
     class Meta:
-        # Replace default lib for json to faster orjson
+        # Заменяем стандартную работу с json на более быструю
         json_loads = orjson.loads
         json_dumps = orjson_dumps
