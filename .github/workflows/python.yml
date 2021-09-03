@@ -1,0 +1,50 @@
+name: Python application
+
+on:
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies for UGC
+        run: |
+          python -m pip install --upgrade pip
+          pip install wemake-python-styleguide flake8-html
+          pip install mypy lxml
+          pip install types-aiofiles types-certifi types-ujson
+          pip install pipenv
+          pipenv install
+
+      - name: Linters
+        run: |
+          git diff origin/main | flake8 --diff
+
+      - name: Check typing
+        if: always()
+        run: |
+          mypy $(git diff origin/main --name-only '*.py')
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: reports
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

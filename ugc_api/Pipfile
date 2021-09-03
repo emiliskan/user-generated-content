@@ -16,6 +16,8 @@ motor = "*"
 pytest = "*"
 pytest-cases = "*"
 pytest-asyncio = "*"
+sentry-sdk = "*"
+python-logstash = "*"
 
 [requires]
 python_version = "3.9"

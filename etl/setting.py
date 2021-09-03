@@ -1,6 +1,7 @@
 import os
 import yaml
 import pathlib
+import sentry_sdk
 
 BATCH_SIZE = 2
 FLUSH_PERIOD = 5
@@ -22,6 +23,7 @@ KAFKA_SASL_MECHANISM = os.getenv("KAFKA_SASL_MECHANISM", "SCRAM-SHA-512")
 KAFKA_SASL_PLAIN_PASSWORD = os.getenv("KAFKA_SASL_PLAIN_PASSWORD", "aaaaaaaa")
 KAFKA_SASL_PLAIN_USERNAME = os.getenv("KAFKA_SASL_PLAIN_USERNAME", "uga_api")
 KAFKA_SSL_CAFILE = os.getenv("KAFKA_SSL_CAFILE", "$HOME/.kafka/YandexCA.crt")
+SENTRY_DSN = os.getenv("SENTRY_DSN", "https://985de561392e4d6391fb209958b7eda5@o977346.ingest.sentry.io/5933885")
 
 KAFKA_DSN = {
     "group_id": os.environ.get("KAFKA_CONSUMER_GROUP", "echo-messages-to-stdout"),
@@ -49,3 +51,8 @@ CLICKHOUSE_DSN = {
     "password": CLICKHOUSE_PASSWORD,
     "ca_certs": CLICKHOUSE_SSL_CAFILE
 }
+
+
+sentry_sdk.init(
+    SENTRY_DSN
+)
