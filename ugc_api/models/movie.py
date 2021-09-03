@@ -6,7 +6,7 @@ from models.base import AbstractModel
 
 
 class Movie(AbstractModel):
-    rating: int
+    rating: float
     scores: List[UUID]
     scores_quality: int
     reviews: List[UUID]
