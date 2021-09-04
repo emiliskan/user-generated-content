@@ -7,7 +7,7 @@ from fastapi import APIRouter, Query, Depends, HTTPException, Response
 from fastapi.security import HTTPBearer, HTTPBasicCredentials
 
 from models.base import PydanticObjectId
-from models import Review, ReviewAnswer, ReviewQuery
+from models import Review, ReviewQuery
 from services.exceptions import DocumentNotFound
 from services.reviews import UserReviewsService, get_user_reviews_service
 from services.auth import get_user_id, AuthServiceUnavailable
@@ -21,7 +21,7 @@ auth_scheme = HTTPBearer()
 @router.get(
     "/reviews",
     description="Reviews list.",
-    response_model=List[ReviewAnswer]
+    response_model=List[Review]
 )
 async def get_reviews(
         query: ReviewQuery,
@@ -33,7 +33,7 @@ async def get_reviews(
 @router.post(
     "/reviews",
     description="Create review.",
-    response_model=ReviewAnswer
+    response_model=Review
 )
 async def create_review(
         review: Review,
@@ -52,7 +52,7 @@ async def create_review(
 @router.get(
     "/reviews/{review_id}",
     description="Get review.",
-    response_model=ReviewAnswer
+    response_model=Review
 )
 async def get_review(
         review_id: PydanticObjectId = Query(None, description="Review ID"),
