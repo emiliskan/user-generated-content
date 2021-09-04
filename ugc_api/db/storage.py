@@ -1,3 +1,4 @@
+import ssl
 from abc import ABC, abstractmethod
 
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -5,10 +6,17 @@ from motor.motor_asyncio import AsyncIOMotorClient
 client: AsyncIOMotorClient = None
 
 
-async def connect_db(host, port):
+async def connect_db(host, port, ssl_ca_certs: str, user: str, password: str):
     """Create database connection."""
     global client
-    client = AsyncIOMotorClient(host, port)
+    client = AsyncIOMotorClient(
+        host=host,
+        port=port,
+        ssl_ca_certs=ssl_ca_certs,
+        ssl_cert_reqs=ssl.CERT_OPTIONAL,
+        username=user,
+        password=password
+    )
 
 
 async def close_db():

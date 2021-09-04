@@ -16,6 +16,11 @@ AUTH_BACKOFF_TIME = int(os.getenv("AUTH_BACKOFF_TIME", 10))
 BACKOFF_FACTOR = float(os.getenv("BACKOFF_FACTOR", 0.5))
 
 MONGO_HOST = os.getenv("MONGO_HOST", "localhost")
-MONGO_PORT = os.getenv("MONGO_PORT", 27017)
+MONGO_PORT = int(os.getenv("MONGO_PORT", 27017))
 MONGO_DB = os.getenv("MONGO_DB", "ugc_db")
 MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", "movies")
+MONGO_USER = os.getenv("MONGO_USER", "admin")
+MONGO_PASS = os.getenv("MONGO_PASS", "")
+MONGO_SSL_CA = os.getenv("MONGO_SSL_CA", "")
+
+MONGO_URL = f"mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST}/?replicaSet=rs01&authSource={MONGO_DB}"
