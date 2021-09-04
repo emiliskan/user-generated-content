@@ -10,7 +10,7 @@ class Review(AbstractModel):
     movie_id: UUID
     text: str = Field(max_length=1000)
     pub_date: datetime = datetime.now()
-    rating: int = 0
+    rating: float = 0
     scores: List[UUID] = []
     scores_quality: int = 0
 
@@ -20,6 +20,4 @@ class ReviewAnswer(Review):
 
 
 class ReviewQuery(BaseQuery):
-    filters: dict
-    offset: int
-    limit: int
+    ...
