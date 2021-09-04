@@ -61,7 +61,7 @@ class AsyncMongoStorage(Storage):
     async def get(self, spec: dict):
         return await client[self.db][self.collection].find_one(spec)
 
-    async def search(self, filters: dict, offset: int, limit: int):
+    async def search(self, filters: dict, offset: int = 0, limit: int = 100):
         cursor = client[self.db][self.collection].find(filters)
         return await cursor.to_list(length=limit)
 
