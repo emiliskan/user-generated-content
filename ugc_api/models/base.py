@@ -25,10 +25,13 @@ class PydanticObjectId(BsonObjectId):
 
 
 class AbstractModel(BaseModel):
-    id: PydanticObjectId = Field(alias='id', default=PydanticObjectId())
+    id: PydanticObjectId = Field(alias="_id", default=uuid4())
 
     class Config:
         arbitrary_types_allowed = True
+        json_encoders = {
+            BsonObjectId: str
+        }
 
     class Meta:
         # Заменяем стандартную работу с json на более быструю
@@ -37,4 +40,6 @@ class AbstractModel(BaseModel):
 
 
 class BaseQuery(AbstractModel):
-    sort_fields: List[str]
+    filters: dict
+    offset: int
+    limit: int
