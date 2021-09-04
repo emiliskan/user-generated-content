@@ -19,9 +19,10 @@ class PydanticObjectId(BsonObjectId):
 
     @classmethod
     def validate(cls, v):
-        if not isinstance(v, BsonObjectId):
-            raise TypeError('ObjectId required')
-        return str(v)
+        if isinstance(v, BsonObjectId):
+            return str(v)
+        elif isinstance(v, str):
+            return BsonObjectId(v)
 
 
 class AbstractModel(BaseModel):
