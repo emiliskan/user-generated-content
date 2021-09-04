@@ -33,6 +33,10 @@ class Storage(ABC):
         pass
 
     @abstractmethod
+    async def search(self, filters: dict, offset: int, limit: int):
+        pass
+
+    @abstractmethod
     async def get(self, spec: dict):
         pass
 
@@ -56,6 +60,10 @@ class AsyncMongoStorage(Storage):
 
     async def get(self, spec: dict):
         return await client[self.db][self.collection].find_one(spec)
+
+    async def search(self, filters: dict, offset: int, limit: int):
+        cursor = client[self.db][self.collection].find(filters)
+        return await cursor.to_list(length=limit)
 
     async def update(self, spec: dict, document: dict):
         updated = await client[self.db][self.collection].update_one(spec, document)
