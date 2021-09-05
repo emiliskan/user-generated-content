@@ -42,9 +42,8 @@ jobs:
       - name: Run API
         if: always()
         run: |
-          cd uga_api
-          pipenv install --system --deploy --skip-lock
-          python main.py
+          docker-compose build uga-api
+          docker-compose up uga-api
 
       - name: Test UGC API
         run: |
@@ -58,4 +57,9 @@ jobs:
           build_dir: reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Stop API
+        if: always()
+          run: |
+            docker-compose down -v
 
