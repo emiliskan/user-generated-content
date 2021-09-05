@@ -40,10 +40,10 @@ jobs:
           mypy $(git diff origin/main --name-only '*.py')
 
       - name: Run API
-          run: |
-            cd uga_api
-            pipenv install
-            python main.py
+        run: |
+          cd uga_api
+          pipenv install
+          python main.py
 
       - name: Test UGC API
         run: |
