@@ -1,10 +1,8 @@
-from uuid import uuid4, UUID
+from uuid import uuid4
 
 import orjson
-from bson import ObjectId
-
-from pydantic import BaseModel, Field
 from bson import ObjectId as BsonObjectId
+from pydantic import BaseModel, Field
 
 
 def orjson_dumps(v, *, default):
@@ -16,7 +14,7 @@ class FastJSONModel(BaseModel):
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
-            ObjectId: str
+            BsonObjectId: str
         }
 
     class Meta:
@@ -38,5 +36,5 @@ class PydanticObjectId(BsonObjectId):
             return BsonObjectId(v)
 
 
-class AbstractModel(BaseModel):
+class AbstractModel(FastJSONModel):
     id: PydanticObjectId = Field(alias="_id", default=uuid4())

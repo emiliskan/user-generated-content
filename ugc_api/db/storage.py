@@ -1,3 +1,4 @@
+import ssl
 from abc import ABC, abstractmethod
 
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -5,10 +6,17 @@ from motor.motor_asyncio import AsyncIOMotorClient
 client: AsyncIOMotorClient = None
 
 
-async def connect_db(host, port):
+async def connect_db(host, port, ssl_ca_certs: str, user: str, password: str):
     """Create database connection."""
     global client
-    client = AsyncIOMotorClient(host, port)
+    client = AsyncIOMotorClient(
+        host=host,
+        port=port,
+        ssl_ca_certs=ssl_ca_certs,
+        ssl_cert_reqs=ssl.CERT_OPTIONAL,
+        username=user,
+        password=password
+    )
 
 
 async def close_db():
@@ -25,13 +33,13 @@ class Storage(ABC):
         pass
 
     @abstractmethod
-    async def get(self, spec: dict):
-        """Get a single document from the database."""
+    async def search(self, filters: dict, limit: int):
+        """The filter argument is a prototype document that all results must match."""
         pass
 
     @abstractmethod
-    async def find(self, spec: dict, length: int):
-        """The filter argument is a prototype document that all results must match."""
+    async def get(self, spec: dict):
+        """Get a single document from the database."""
         pass
 
     @abstractmethod
@@ -55,8 +63,9 @@ class AsyncMongoStorage(Storage):
     async def get(self, spec: dict) -> dict:
         return await client[self.db][self.collection].find_one(spec)
 
-    async def find(self, spec: dict, length: int) -> dict:
-        return await client[self.db][self.collection].find(spec).to_list(length)
+    async def search(self, filters: dict, offset: int = 0, limit: int = 100):
+        cursor = client[self.db][self.collection].find(filters)
+        return await cursor.to_list(length=limit)
 
     async def update(self, spec: dict, document: dict):
         updated = await client[self.db][self.collection].update_one(spec, document)

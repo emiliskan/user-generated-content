@@ -65,8 +65,8 @@ class MovieScoresService:
         movie = await self.movies.get({"_id": movie_id})
 
         length = movie["scores_quality"]
-        scores = await self.scores.find({"movie_id": movie_score["movie_id"]},
-                                        length)
+        scores = await self.scores.search({"movie_id": movie_score["movie_id"]},
+                                          limit=length)
         new_rating = sum(s["score"] for s in scores) / length
 
         doc = {

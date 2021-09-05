@@ -1,17 +1,19 @@
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 
-from models.base import AbstractModel
+from models.base import AbstractModel, BaseQuery
 from pydantic import Field
 
 
 class Review(AbstractModel):
-    user_id: UUID
+    user_id: Optional[UUID]
     movie_id: UUID
-    pub_date: datetime
     text: str = Field(max_length=1000)
-    movie_score_id: UUID
-    rating: int
-    scores: List[UUID]
-    scores_quality: int
+    pub_date: datetime = datetime.now()
+    rating: float = 0
+    scores: List[UUID] = []
+
+
+class ReviewQuery(BaseQuery):
+    ...

@@ -1,4 +1,5 @@
 import logging
+import ssl
 
 import uvicorn
 from fastapi import FastAPI
@@ -19,7 +20,13 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    await connect_db(config.MONGO_HOST, config.MONGO_PORT)
+    await connect_db(
+        host=config.MONGO_HOST,
+        port=config.MONGO_PORT,
+        ssl_ca_certs=config.MONGO_SSL_CA,
+        user=config.MONGO_USER,
+        password=config.MONGO_PASS,
+    )
 
 
 @app.on_event("shutdown")
