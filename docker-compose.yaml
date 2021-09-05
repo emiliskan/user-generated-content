@@ -69,7 +69,7 @@ services:
       - /tmp/logs/nginx:/var/log/nginx:ro
       - ./logging/filebeat.yml:/usr/share/filebeat/filebeat.yml
     depends_on:
-      - ugc-api
+      - uga-api
       - nginx
       - logstash
       - elasticsearch
