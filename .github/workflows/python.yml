@@ -60,6 +60,6 @@ jobs:
 
       - name: Stop API
         if: always()
-          run: |
-            docker-compose down -v
+        run: |
+          docker-compose down -v
 
