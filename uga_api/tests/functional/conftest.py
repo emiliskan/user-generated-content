@@ -42,8 +42,7 @@ async def auth(make_post_request) -> str:
     }
     url = f"{settings.AUTH_SERVICE_URL}/api/v1/user"
     # Temporary return default token to test
-    return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzMDg2NDc1OSwianRpIjoiMGYxZDYxNjktN2U4ZC00OGZiLWJiM2QtNzBkNDcwZDBiNGIwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ijc3MDc2MDljLWNkNTctNDJlYy04MzhiLTNlN2UxOWMxYTljOSIsIm5iZiI6MTYzMDg2NDc1OSwiZXhwIjoxNjMwODY4MzU5LCJyb2xlIjpudWxsLCJzZXNzaW9uIjoiYzMyZjM5MTItYTFkMi00OTM3LWI2YTgtNjBiM2U3OTk4MzAxIn0.YoeS9LO8FX7WvLHPl1a4W8MdNqQ2GCE2P1XT84rzn3w"
-
+    return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzMDg2NTg2MCwianRpIjoiMmM0YTY3MDYtOGJkNy00ZGY0LWFmMjEtMjg5NjI3YTBmNmQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ijc3MDc2MDljLWNkNTctNDJlYy04MzhiLTNlN2UxOWMxYTljOSIsIm5iZiI6MTYzMDg2NTg2MCwiZXhwIjoxNjMwODY5NDYwLCJyb2xlIjpudWxsLCJzZXNzaW9uIjoiMjkxMDZhYzUtOGE3YS00YzJjLTg5ZjEtMDAzMjJlZWM5NThhIn0.Mq_b2cIBvMpVstprVHNI5Vd2YyL3SiOmkbu5PWLezCg"
     '''response = await make_post_request(url, data)
 
     # if we already have user
