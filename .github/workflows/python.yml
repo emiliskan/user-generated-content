@@ -50,6 +50,7 @@ jobs:
       - name: Test UGA API
         if: always()
         run: |
+          docker ps
           cd uga_api
           pipenv install --system --deploy --skip-lock
           pip list
