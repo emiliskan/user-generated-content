@@ -11,6 +11,7 @@ jobs:
     env:
       SECRET_KEY: aaa
       JWT_SECRET_KEY: bbbb
+
     strategy:
       matrix:
         python-version: [3.9]
@@ -47,6 +48,9 @@ jobs:
       - name: Run Auth API
         if: always()
         run: |
+          git config --global user.name 'MaltsevaNata'
+          git config --global user.email 'MaltsevaNata@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git clone https://github.com/vctecc/Auth_sprint_2
           cd Auth_sprint_2
           docker compose up --build -d
