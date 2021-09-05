@@ -55,7 +55,7 @@ jobs:
           cd ..
           pytest --html=reports/pytest-report/api_tests.html
 
-      - name: Stop API
+      - name: Stop UGA API
         if: always()
         run: |
           docker-compose down -v

@@ -43,16 +43,6 @@ async def auth(make_post_request) -> str:
     url = f"{settings.AUTH_SERVICE_URL}/api/v1/user"
     # Temporary return default token to test
     return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzMDg2NTg2MCwianRpIjoiMmM0YTY3MDYtOGJkNy00ZGY0LWFmMjEtMjg5NjI3YTBmNmQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ijc3MDc2MDljLWNkNTctNDJlYy04MzhiLTNlN2UxOWMxYTljOSIsIm5iZiI6MTYzMDg2NTg2MCwiZXhwIjoxNjMwODY5NDYwLCJyb2xlIjpudWxsLCJzZXNzaW9uIjoiMjkxMDZhYzUtOGE3YS00YzJjLTg5ZjEtMDAzMjJlZWM5NThhIn0.Mq_b2cIBvMpVstprVHNI5Vd2YyL3SiOmkbu5PWLezCg"
-    '''response = await make_post_request(url, data)
-
-    # if we already have user
-    if response.status != 200:
-        del data["email"]
-        url = f"{settings.AUTH_SERVICE_URL}/api/v1/auth"
-        response = await make_post_request(url, data)
-
-    assert response.status == 200, "something wrong with auth service."
-    return response.body["accessToken"]'''
 
 
 @pytest.fixture
