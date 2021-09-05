@@ -51,7 +51,7 @@ jobs:
         if: always()
         run: |
           pip list
-          pytest -–html=reports/api_tests.html
+          pytest --html=reports/api_tests.html
 
       - name: Stop API
         if: always()
