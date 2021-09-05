@@ -46,6 +46,7 @@ jobs:
           mypy $(git diff origin/main --name-only '*.py')
 
       - name: Access to Auth API
+        if: always()
         uses: actions/checkout@v2
         with:
           repository: vctecc/Auth_sprint_2
