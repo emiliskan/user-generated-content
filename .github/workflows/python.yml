@@ -48,6 +48,8 @@ jobs:
       - name: Test UGC API
         if: always()
         run: |
+          pip install pytest
+          pip install pytest-html
           pytest -–html=reports/api_tests.html
 
       - name: Stop API
