@@ -1,5 +1,6 @@
 import logging
 from http import HTTPStatus
+from uuid import UUID
 
 from fastapi import APIRouter, Query, Depends, HTTPException
 
@@ -13,10 +14,10 @@ logger = logging.getLogger(__name__)
 @router.get("/scores/movies/{movie_id}",
             response_model=Movie)
 async def get_movie_score(
-        movie_id: str = Query(None, description="Movie ID"),
+        movie_id: UUID = Query(None, description="Movie ID"),
         service: MovieService = Depends(get_movie_service)
 ) -> Movie:
-    print(movie_id)
+
     result = await service.get(movie_id)
     if not result:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND,
