@@ -50,6 +50,8 @@ jobs:
       - name: Test UGC API
         if: always()
         run: |
+          cd uga_api
+          pipenv install --system --deploy --skip-lock
           pip list
           pytest --html=reports/api_tests.html
 
