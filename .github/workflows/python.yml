@@ -43,8 +43,7 @@ jobs:
         if: always()
         run: |
           cd uga_api
-          pipenv install
-          pip install uvicorn
+          pipenv install --system --deploy --skip-lock
           python main.py
 
       - name: Test UGC API
