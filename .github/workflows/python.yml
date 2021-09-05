@@ -44,6 +44,7 @@ jobs:
         run: |
           cd uga_api
           pipenv install
+          pip install uvicorn
           python main.py
 
       - name: Test UGC API
