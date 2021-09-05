@@ -40,6 +40,7 @@ jobs:
           mypy $(git diff origin/main --name-only '*.py')
 
       - name: Run API
+        if: always()
         run: |
           cd uga_api
           pipenv install
@@ -47,7 +48,7 @@ jobs:
 
       - name: Test UGC API
         run: |
-          - pytest -–html=reports/api_tests.html
+          pytest -–html=reports/api_tests.html
 
       - name: Deploy to GitHub Pages
         if: always()
