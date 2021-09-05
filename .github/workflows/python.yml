@@ -46,12 +46,11 @@ jobs:
           mypy $(git diff origin/main --name-only '*.py')
 
       - name: Run Auth API
-        if: always()
+        uses: actions/checkout@v2
+        with:
+          repository: vctecc/Auth_sprint_2
+          token: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          git config --global user.name 'MaltsevaNata'
-          git config --global user.email 'MaltsevaNata@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git clone https://github.com/vctecc/Auth_sprint_2
           cd Auth_sprint_2
           docker compose up --build -d
 
