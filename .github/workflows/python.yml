@@ -46,6 +46,7 @@ jobs:
           docker-compose up -d uga-api
 
       - name: Test UGC API
+        if: always()
         run: |
           pytest -–html=reports/api_tests.html
 
