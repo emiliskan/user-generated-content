@@ -45,11 +45,14 @@ jobs:
         run: |
           mypy $(git diff origin/main --name-only '*.py')
 
-      - name: Run Auth API
+      - name: Access to Auth API
         uses: actions/checkout@v2
         with:
           repository: vctecc/Auth_sprint_2
           token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Run Auth API
+        if: always()
         run: |
           cd Auth_sprint_2
           docker compose up --build -d
