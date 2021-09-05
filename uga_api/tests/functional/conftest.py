@@ -35,10 +35,7 @@ async def auth(make_post_request) -> str:
     :param make_post_request:
     :return: Access token
     """
-    return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYzMDg2NTg2MCwianRpIjoiMmM0YTY3MDYtOGJk" \
-           "Ny00ZGY0LWFmMjEtMjg5NjI3YTBmNmQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ijc3MDc2MDljLWNkNTctNDJlYy04MzhiLTNlN2UxO" \
-           "WMxYTljOSIsIm5iZiI6MTYzMDg2NTg2MCwiZXhwIjoxNjMwODY5NDYwLCJyb2xlIjpudWxsLCJzZXNzaW9uIjoiMjkxMDZhYzUtOGE3YS" \
-           "00YzJjLTg5ZjEtMDAzMjJlZWM5NThhIn0.Mq_b2cIBvMpVstprVHNI5Vd2YyL3SiOmkbu5PWLezCg"
+    return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
 
 
 @pytest.fixture

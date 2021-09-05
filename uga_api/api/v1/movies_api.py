@@ -23,4 +23,3 @@ async def save_movie_progress(
     if Authorization is None:
         raise HTTPException(status_code=HTTPStatus.NETWORK_AUTHENTICATION_REQUIRED, detail="Auth token required.")
     await movie_service.save_movie_progress(movie_id, "87453e9b-e9d6-4caa-bbe2-9ffda193a999", viewed_frame)
-
