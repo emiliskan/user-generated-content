@@ -43,11 +43,16 @@ jobs:
         if: always()
         run: |
           docker-compose build uga-api
-          docker-compose up uga-api
+          docker-compose up -d uga-api
 
       - name: Test UGC API
         run: |
           pytest -–html=reports/api_tests.html
+
+      - name: Stop API
+        if: always()
+        run: |
+          docker-compose down -v
 
       - name: Deploy to GitHub Pages
         if: always()
@@ -58,8 +63,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Stop API
-        if: always()
-        run: |
-          docker-compose down -v
 
