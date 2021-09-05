@@ -1,1 +1,1 @@
-from .utils import inc_avg_mean, reduce_avg_mean
+from .utils import inc_avg_mean
