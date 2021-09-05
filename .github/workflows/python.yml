@@ -27,6 +27,8 @@ jobs:
           pip install wemake-python-styleguide flake8-html
           pip install mypy lxml
           pip install types-aiofiles types-certifi types-ujson
+          pip install pytest
+          pip install pytest-html
           pip install pipenv
           pipenv install
 
@@ -48,8 +50,7 @@ jobs:
       - name: Test UGC API
         if: always()
         run: |
-          pip install pytest
-          pip install pytest-html
+          pip list
           pytest -–html=reports/api_tests.html
 
       - name: Stop API
