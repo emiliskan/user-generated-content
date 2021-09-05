@@ -8,6 +8,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: aaa
+      JWT_SECRET_KEY: bbbb
     strategy:
       matrix:
         python-version: [3.9]
@@ -41,13 +44,20 @@ jobs:
         run: |
           mypy $(git diff origin/main --name-only '*.py')
 
-      - name: Run API
+      - name: Run Auth API
+        if: always()
+        run: |
+          git clone https://github.com/vctecc/Auth_sprint_2
+          cd Auth_sprint_2
+          docker compose up --build -d
+
+      - name: Run UGA API
         if: always()
         run: |
           docker-compose build uga-api
           docker-compose up -d uga-api
 
-      - name: Test UGC API
+      - name: Test UGA API
         if: always()
         run: |
           cd uga_api
