@@ -69,13 +69,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: send default message from ci
+  conclude:
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
         if: always()
-        uses: appleboy/telegram-action@master
+      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            The ${{ github.event_name }} event finished with result ${{ github.event.workflow_run.conclusion }}
+            The ${{ github.event_name }} event finished with result ${{ env.WORKFLOW_CONCLUSION }}
 
 
