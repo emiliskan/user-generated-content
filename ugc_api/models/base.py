@@ -38,3 +38,9 @@ class PydanticObjectId(BsonObjectId):
 
 class AbstractModel(FastJSONModel):
     id: PydanticObjectId = Field(alias="_id", default=uuid4())
+
+
+class BaseQuery(AbstractModel):
+    filters: dict
+    offset: int
+    limit: int

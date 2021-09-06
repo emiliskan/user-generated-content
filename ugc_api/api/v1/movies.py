@@ -6,6 +6,7 @@ from fastapi import APIRouter, Query, Depends, HTTPException
 
 from models import Movie
 from services import MovieService, get_movie_service
+from services.exceptions import DocumentNotFound
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -18,8 +19,9 @@ async def get_movie_score(
         service: MovieService = Depends(get_movie_service)
 ) -> Movie:
 
-    result = await service.get(movie_id)
-    if not result:
+    try:
+        result = await service.get(movie_id)
+    except DocumentNotFound:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND,
                             detail="Movie not exists")
 

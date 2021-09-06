@@ -8,6 +8,7 @@ from common import inc_avg_mean
 from core.config import MONGO_DB
 from db import Storage, get_current_storage
 from models import MovieScore, PydanticObjectId
+from services.exceptions import DocumentNotFound
 
 
 def create_movie_info(movie_id: str) -> dict:
@@ -28,8 +29,10 @@ class MovieScoresService:
 
     async def get(self, score_id: PydanticObjectId):
         result = await self.scores.get({"_id": score_id})
-        if result:
-            return result
+        if not result:
+            raise DocumentNotFound
+
+        return result
 
     async def add(self, user_id: str,  movie_score: dict):
         movie_score["user_id"] = user_id
