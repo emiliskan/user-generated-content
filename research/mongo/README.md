@@ -33,7 +33,7 @@
       
             {
                 "_id": <uuid_string>,
-                "rating": <integer>,
+                "rating": <double>,
                 "scores_quality": <integer>,
                 "scores": [<uuid_string>, ...],
                 "reviews": [<uuid_string>, ...]
@@ -50,7 +50,7 @@
                 "pub_date": <datetime>,
                 "text": <string>,
                 "movie_score_id": <uuid_string>,
-                "rating": <integer>,
+                "rating": <double>,
                 "scores": [<uuid_string>, ...],
                 "scores_quality": <integer>
             }
