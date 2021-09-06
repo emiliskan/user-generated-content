@@ -3,13 +3,11 @@ from http import HTTPStatus
 from bson import ObjectId
 
 from fastapi import APIRouter, Query, Depends, HTTPException
-from fastapi.security import HTTPBearer, HTTPBasicCredentials
+from fastapi.security import HTTPBearer
 
 from models import MovieScore, CreateMovieScore, UpdateMovieScore, PydanticObjectId
 from services import MovieScoresService, get_movie_scores_service
-from services.auth import get_user_id
-
-from services.auth import AuthServiceUnavailable
+from core.auth import auth
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -21,13 +19,8 @@ auth_scheme = HTTPBearer()
 async def create_movie_score(
         movie_score: CreateMovieScore,
         service: MovieScoresService = Depends(get_movie_scores_service),
-        credentials: HTTPBasicCredentials = Depends(auth_scheme),
+        user_id: str = Depends(auth),
 ) -> MovieScore:
-
-    try:
-        user_id = await get_user_id(credentials.credentials)
-    except AuthServiceUnavailable:
-        raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
 
     result = await service.add(user_id, movie_score.dict())
     if not result:
@@ -42,12 +35,7 @@ async def create_movie_score(
 async def get_movie_score(
         movie_score_id: str = Query(None),
         service: MovieScoresService = Depends(get_movie_scores_service),
-        credentials: HTTPBasicCredentials = Depends(auth_scheme)
 ) -> MovieScore:
-    try:
-        await get_user_id(credentials.credentials)
-    except AuthServiceUnavailable:
-        raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
 
     movie_id = PydanticObjectId(movie_score_id)
     result = await service.get(movie_id)
@@ -62,11 +50,8 @@ async def get_movie_score(
 async def delete_movie_score(
         movie_score_id: str = Query(None),
         service: MovieScoresService = Depends(get_movie_scores_service),
-        credentials: HTTPBasicCredentials = Depends(auth_scheme)) -> None:
-    try:
-        await get_user_id(credentials.credentials)
-    except AuthServiceUnavailable:
-        raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
+        user_id: str = Depends(auth),
+) -> None:
 
     movie_core_id = ObjectId(movie_score_id)
     if not await service.remove(movie_core_id):
@@ -79,11 +64,8 @@ async def delete_movie_score(
 async def update_movie_score(
         movie_score: UpdateMovieScore,
         service: MovieScoresService = Depends(get_movie_scores_service),
-        credentials: HTTPBasicCredentials = Depends(auth_scheme)) -> MovieScore:
-    try:
-        user_id = await get_user_id(credentials.credentials)
-    except AuthServiceUnavailable:
-        raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
+        user_id: str = Depends(auth),
+) -> MovieScore:
 
     result = await service.update(user_id, movie_score.dict())
     if not result:

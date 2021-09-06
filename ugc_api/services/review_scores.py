@@ -27,7 +27,7 @@ class UserReviewScoresService(BaseService):
 
         return review
 
-    async def add(self, user_id: UUID, review_score: ReviewScore) -> dict:
+    async def add(self, user_id: str, review_score: ReviewScore) -> dict:
         data = review_score.dict()
         data["user_id"] = user_id
         created = await self.storage.create(data)
@@ -51,7 +51,7 @@ class UserReviewScoresService(BaseService):
 
         return created
 
-    async def update(self, user_id: UUID, review_score_id: PydanticObjectId, review_score: ReviewScore) -> None:
+    async def update(self, user_id: str, review_score_id: PydanticObjectId, review_score: ReviewScore) -> None:
 
         data = review_score.dict()
         data["user_id"] = user_id
@@ -77,7 +77,7 @@ class UserReviewScoresService(BaseService):
 
         await self.reviews.update({"_id": review["_id"]}, review_data)
 
-    async def remove(self, user_id: UUID, review_score_id: PydanticObjectId) -> None:
+    async def remove(self, user_id: str, review_score_id: PydanticObjectId) -> None:
         review_score = await self.get(review_score_id)
 
         if not review_score["user_id"] == user_id:

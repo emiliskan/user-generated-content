@@ -30,13 +30,18 @@ class UserReviewsService(BaseService):
 
         return reviews
 
-    async def add(self, user_id: UUID, review: Review):
+    async def add(self, user_id: str, review: Review):
         data = review.dict()
         data["user_id"] = user_id
         created = await self.storage.create(data)
         return await self.get(created.inserted_id)
 
-    async def update(self, user_id: UUID, review_id: PydanticObjectId, review: Review):
+    async def update(self, user_id: str, review_id: PydanticObjectId, review: Review):
+        review = await self.get(review_id)
+
+        if not review["user_id"] == user_id:
+            raise NotAllowed
+
         data = review.dict()
         await self.storage.update({"_id": review_id}, {"$set": data})
         return await self.get(review_id)

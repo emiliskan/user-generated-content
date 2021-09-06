@@ -1,16 +1,15 @@
 import logging
-import uuid
 from http import HTTPStatus
 from typing import List
 
-from fastapi import APIRouter, Query, Depends, HTTPException, Response
-from fastapi.security import HTTPBearer, HTTPBasicCredentials
+from fastapi import APIRouter, Query, Depends, HTTPException
+from fastapi.security import HTTPBearer
 
 from models.base import PydanticObjectId
 from models import Review, ReviewQuery
-from services.exceptions import DocumentNotFound
+from services.exceptions import DocumentNotFound, NotAllowed
 from services.reviews import UserReviewsService, get_user_reviews_service
-from services.auth import get_user_id, AuthServiceUnavailable
+from core.auth import auth
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -38,14 +37,8 @@ async def get_reviews(
 async def create_review(
         review: Review,
         service: UserReviewsService = Depends(get_user_reviews_service),
-        credentials: HTTPBasicCredentials = Depends(auth_scheme),
-):
-    token = credentials.credentials
-    try:
-        user_id = await get_user_id(token)
-    except AuthServiceUnavailable:
-        raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
-
+        user_id: str = Depends(auth),
+) -> dict:
     return await service.add(user_id, review)
 
 
@@ -57,7 +50,7 @@ async def create_review(
 async def get_review(
         review_id: PydanticObjectId = Query(None, description="Review ID"),
         service: UserReviewsService = Depends(get_user_reviews_service),
-):
+) -> dict:
 
     try:
         review = await service.get(review_id)
@@ -74,17 +67,13 @@ async def get_review(
 async def delete_review(
         review_id: str = Query(None, description="Review ID"),
         service: UserReviewsService = Depends(get_user_reviews_service),
-        credentials: HTTPBasicCredentials = Depends(auth_scheme),
+        user_id: str = Depends(auth),
 ):
-    token = credentials.credentials
-    try:
-        user_id = await get_user_id(token)
-    except AuthServiceUnavailable:
-        raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
-
     review_id = PydanticObjectId(review_id)
     try:
         await service.remove(user_id, review_id)
+    except NotAllowed:
+        raise HTTPException(status_code=HTTPStatus.METHOD_NOT_ALLOWED)
     except DocumentNotFound:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
 
@@ -98,18 +87,13 @@ async def update_review(
         review: Review,
         review_id: str = Query(None, description="Review ID"),
         service: UserReviewsService = Depends(get_user_reviews_service),
-        credentials: HTTPBasicCredentials = Depends(auth_scheme),
-):
-    token = credentials.credentials
-    try:
-        user_id = await get_user_id(token)
-    except AuthServiceUnavailable:
-        raise HTTPException(status_code=HTTPStatus.SERVICE_UNAVAILABLE)
+        user_id: str = Depends(auth),
+) -> None:
 
     review_id = PydanticObjectId(review_id)
     try:
-        updated = await service.update(user_id, review_id, review)
+        await service.update(user_id, review_id, review)
+    except NotAllowed:
+        raise HTTPException(status_code=HTTPStatus.METHOD_NOT_ALLOWED)
     except DocumentNotFound:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
-
-    return updated
