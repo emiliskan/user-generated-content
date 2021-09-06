@@ -14,6 +14,7 @@ pytest = "*"
 pytest-cases = "*"
 pytest-asyncio = "*"
 motor = "*"
+pyjwt = "*"
 
 [dev-packages]
 

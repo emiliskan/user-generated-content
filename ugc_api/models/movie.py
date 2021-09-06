@@ -1,14 +1,12 @@
+from datetime import datetime
 from typing import List
-from uuid import UUID, uuid4
+from uuid import UUID
 
-from pydantic import Field
-
-from models.base import FastJSONModel
+from models.base import AbstractModel
 
 
-class Movie(FastJSONModel):
-    id: UUID = Field(alias="_id", default=uuid4())
+class Movie(AbstractModel):
     rating: float
-    scores: List
+    scores: List[UUID]
     scores_quality: int
-    reviews: List
+    reviews: List[UUID]

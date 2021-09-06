@@ -1,2 +1,4 @@
 __pycache__/
 .idea/
+flake-report/
+mypy-report/

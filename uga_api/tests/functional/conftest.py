@@ -1,12 +1,13 @@
+import asyncio
 from dataclasses import dataclass
 
-import pytest
 import aiohttp
-import asyncio
-
+import jwt
+import pytest
 from multidict import CIMultiDictProxy
 
-import settings
+from settings import (USER_ID, JWT_SECRET_KEY, JWT_ALGORITHM,
+                      API_SERVICE_URL, API)
 
 
 @dataclass
@@ -29,34 +30,18 @@ def event_loop():
 
 
 @pytest.fixture
-async def auth(make_post_request) -> str:
-    """
-    Authorize user in auth service
-    :param make_post_request:
-    :return: Access token
-    """
-    data = {
-        "username": "test_user",
-        "password": "asJDjDahJKjdHsd",
-        "email": "test_user@yandex.ru"
+async def auth() -> str:
+    playload = {
+        "user_id": USER_ID
     }
-    url = f"{settings.AUTH_SERVICE_URL}/api/v1/user"
-    response = await make_post_request(url, data)
-
-    # if we already have user
-    if response.status != 200:
-        del data["email"]
-        url = f"{settings.AUTH_SERVICE_URL}/api/v1/auth"
-        response = await make_post_request(url, data)
-
-    assert response.status == 200, "something wrong with auth service."
-    return response.body["accessToken"]
+    return jwt.encode(playload, JWT_SECRET_KEY, JWT_ALGORITHM)
 
 
 @pytest.fixture
 def make_get_request(session):
-    async def inner(method: str, params: dict = None, headers: dict = None) -> HTTPResponse:
-        url = f"http://{settings.API_SERVICE_URL}/{settings.API}/{method}"
+    async def inner(method: str, params: dict = None,
+                    headers: dict = None) -> HTTPResponse:
+        url = f"http://{API_SERVICE_URL}/{API}/{method}"
         async with session.get(url, params=params, headers=headers) as response:
             return HTTPResponse(
                 body=await response.json(),
@@ -69,7 +54,8 @@ def make_get_request(session):
 
 @pytest.fixture
 def make_post_request(session):
-    async def inner(url: str, data: dict = None, headers: dict = None) -> HTTPResponse:
+    async def inner(url: str, data: dict = None,
+                    headers: dict = None) -> HTTPResponse:
         url = f"http://{url}"
         async with session.post(url, json=data, headers=headers) as response:
             return HTTPResponse(
