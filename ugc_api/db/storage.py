@@ -33,7 +33,7 @@ class Storage(ABC):
         pass
 
     @abstractmethod
-    async def search(self, filters: dict, limit: int):
+    async def search(self, filters: dict, offset: int, limit: int):
         """The filter argument is a prototype document that all results must match."""
         pass
 
