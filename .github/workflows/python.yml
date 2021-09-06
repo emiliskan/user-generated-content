@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.9]
 
     steps:
       - uses: actions/checkout@v2
@@ -27,6 +27,8 @@ jobs:
           pip install wemake-python-styleguide flake8-html
           pip install mypy lxml
           pip install types-aiofiles types-certifi types-ujson
+          pip install pytest
+          pip install pytest-html
           pip install pipenv
           pipenv install
 
@@ -39,6 +41,25 @@ jobs:
         run: |
           mypy $(git diff origin/main --name-only '*.py')
 
+      - name: Run UGA API
+        if: always()
+        run: |
+          docker-compose build uga-api
+          docker-compose up -d uga-api
+
+      - name: Test UGA API
+        if: always()
+        run: |
+          cd uga_api
+          pipenv install --system --deploy --skip-lock
+          cd ..
+          pytest --html=reports/pytest-report/index.html
+
+      - name: Stop UGA API
+        if: always()
+        run: |
+          docker-compose down -v
+
       - name: Deploy to GitHub Pages
         if: always()
         uses: crazy-max/ghaction-github-pages@v2
@@ -47,4 +68,5 @@ jobs:
           build_dir: reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
