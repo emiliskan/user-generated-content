@@ -1,22 +1,3 @@
-# AUTH
-FLASK_APP=app:create_app('configs.development_config.DevelopmentConfig')
-POSTGRES_HOST=auth-db-dev
-POSTGRES_USER=user
-POSTGRES_PORT=5432
-POSTGRES_PASSWORD=password
-REDIS_HOST=auth-redis
-REDIS_PORT=6379
-JAEGER_HOST=jaeger
-SECRET_KEY=wwwaaaaaaat
-
-JWT_SECRET_KEY=strong_secret
-JWT_ALGORITHM=HS256
-
-GOOGLE_CLIENT_ID=a
-GOOGLE_CLIENT_SECRET=b
-YANDEX_CLIENT_ID=c
-YANDEX_CLIENT_SECRET=d
-
 # UCG_API
 KAFKA_HOST=rc1a-mi7khra801ifkpfs.mdb.yandexcloud.net
 KAFKA_PORT=9091
@@ -25,10 +6,9 @@ KAFKA_SASL_MECHANISM=SCRAM-SHA-512
 KAFKA_SASL_PLAIN_PASSWORD=aaaaaaaa
 KAFKA_SASL_PLAIN_USERNAME=ucg_api
 KAFKA_SSL_CAFILE=/usr/local/share/ca-certificates/Yandex/YandexCA.crt
-AUTH_HOST=auth-api
-AUTH_PORT=5000
-AUTH_ENDPOINT=api/v1/user
-BACKOFF_FACTOR=0.5
+
+# AUTH
+JWT_SECRET_KEY=stong-secret
 
 # UGA_API
 MONGO_HOST=rc1a-avvodtz9jom0y2ao.mdb.yandexcloud.net

@@ -17,13 +17,6 @@ MONGO_SSL_CA = os.getenv("MONGO_SSL_CA", "")
 
 MONGO_URL = f"mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST}/?replicaSet=rs01&authSource={MONGO_DB}"
 
-# AUTH
-AUTH_HOST = os.getenv('AUTH_HOST', 'localhost')
-AUTH_PORT = os.getenv('AUTH_PORT', '5000')
-AUTH_ENDPOINT = os.getenv('AUTH_ENDPOINT', 'api/v1/user')
-AUTH_URL = f'http://{AUTH_HOST}:{AUTH_PORT}/{AUTH_ENDPOINT}'
-AUTH_BACKOFF_TIME = int(os.getenv('AUTH_BACKOFF_TIME', 10))
-
 BACKOFF_FACTOR = float(os.getenv('BACKOFF_FACTOR', 0.5))
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")

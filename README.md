@@ -7,6 +7,8 @@
 - ugc_api: сервис для сохранения пользовательских оценок
 - nginx: сервис с nginx, чтоб открыть ugc_api и uga_api во внешний мир
 
+В этом спринте работа проводилась в основном в модуле ugc_api.
+
 # CI
 
 Для репозитория настроены CI процессы.
@@ -16,23 +18,7 @@
 Отчеты доступны по ссылке:
 https://emiliskan.github.io/ugc_sprint_2/
 >   
-# Запуск проекта
-
-# Auth
-
-Запуск сервиса авторизации:
-
-```shell
-git clone https://github.com/vctecc/Auth_sprint_2
-cd Auth_sprint_2
-```
-Задаем **SECRET_KEY** и **JWT_SECRET_KEY**
-```
-docker compose up --build
-```
-
-# UGC
-Запуск сервиса:
+# Запуск сервиса
 
 Задаем **JWT_SECRET_KEY**
 ```shell
