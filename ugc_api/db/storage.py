@@ -33,11 +33,13 @@ class Storage(ABC):
         pass
 
     @abstractmethod
-    async def search(self, filters: dict, offset: int, limit: int):
+    async def search(self, filters: dict, limit: int):
+        """The filter argument is a prototype document that all results must match."""
         pass
 
     @abstractmethod
     async def get(self, spec: dict):
+        """Get a single document from the database."""
         pass
 
     @abstractmethod
@@ -55,10 +57,10 @@ class AsyncMongoStorage(Storage):
         self.db = db
         self.collection = collection
 
-    async def create(self, document: dict):
+    async def create(self, document: dict) -> dict:
         return await client[self.db][self.collection].insert_one(document)
 
-    async def get(self, spec: dict):
+    async def get(self, spec: dict) -> dict:
         return await client[self.db][self.collection].find_one(spec)
 
     async def search(self, filters: dict, offset: int = 0, limit: int = 100):

@@ -5,12 +5,10 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
-from db.storage import connect_db, close_db
+from api.v1 import movie_scores, review_scores, bookmarks, reviews, movies
 from core import config
-from api.v1 import movie_scores, review_scores, bookmarks, reviews
-
 from core.logger import LOGGING
-
+from db.storage import connect_db, close_db
 
 app = FastAPI(
     title=config.PROJECT_NAME,
@@ -36,9 +34,10 @@ async def shutdown():
     await close_db()
 
 app.include_router(bookmarks.router, prefix="/api/v1", tags=["Bookmarks"])
-app.include_router(review_scores.router, prefix="/api/v1", tags=["ReviewScores"])
-app.include_router(movie_scores.router, prefix="/api/v1", tags=["MovieScores"])
 app.include_router(reviews.router, prefix="/api/v1", tags=["Reviews"])
+app.include_router(review_scores.router, prefix="/api/v1", tags=["ReviewScores"])
+app.include_router(movies.router, prefix="/api/v1", tags=["Movies"])
+app.include_router(movie_scores.router, prefix="/api/v1", tags=["MovieScores"])
 
 if __name__ == "__main__":
     uvicorn.run(
