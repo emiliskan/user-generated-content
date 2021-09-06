@@ -1,4 +1,5 @@
 import logging
+import ssl
 
 import uvicorn
 
@@ -7,12 +8,10 @@ from fastapi.responses import ORJSONResponse
 import sentry_sdk
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 
-from db.storage import connect_db, close_db
+from api.v1 import movie_scores, review_scores, bookmarks, reviews, movies
 from core import config
-from api.v1 import movie_scores, review_scores, bookmarks, reviews
-
 from core.logger import LOGGING
-
+from db.storage import connect_db, close_db
 
 app = FastAPI(
     title=config.PROJECT_NAME,
@@ -26,7 +25,13 @@ sentry_sdk.init(dsn=config.SENTRY_DSN)
 
 @app.on_event("startup")
 async def startup():
-    await connect_db(config.MONGO_HOST, config.MONGO_PORT)
+    await connect_db(
+        host=config.MONGO_HOST,
+        port=config.MONGO_PORT,
+        ssl_ca_certs=config.MONGO_SSL_CA,
+        user=config.MONGO_USER,
+        password=config.MONGO_PASS,
+    )
 
 
 @app.on_event("shutdown")
@@ -35,9 +40,10 @@ async def shutdown():
 
 
 app.include_router(bookmarks.router, prefix="/api/v1", tags=["Bookmarks"])
-app.include_router(review_scores.router, prefix="/api/v1", tags=["ReviewScores"])
-app.include_router(movie_scores.router, prefix="/api/v1", tags=["MovieScores"])
 app.include_router(reviews.router, prefix="/api/v1", tags=["Reviews"])
+app.include_router(review_scores.router, prefix="/api/v1", tags=["ReviewScores"])
+app.include_router(movies.router, prefix="/api/v1", tags=["Movies"])
+app.include_router(movie_scores.router, prefix="/api/v1", tags=["MovieScores"])
 
 app = SentryAsgiMiddleware(app)
 

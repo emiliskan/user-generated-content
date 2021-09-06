@@ -1,0 +1,31 @@
+version: '3.8'
+
+x-env: &x-env
+  env_file:
+  - env_dev
+
+services:
+  uga-api:
+    container_name: uga-api
+    build:
+      context: uga_api/
+    volumes:
+      - ./uga_api/:/app/
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    networks:
+      - movies-network
+    <<: *x-env
+  etl:
+    build:
+      context: etl/
+    image: uga_etl
+    container_name: uga_etl
+    restart: on-failure
+    <<: *x-env
+
+networks:
+  movies-network:
+    name: movies-api-network
+    driver: bridge
