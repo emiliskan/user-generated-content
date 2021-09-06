@@ -88,8 +88,6 @@ async def delete_review(
     except DocumentNotFound:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
 
-    return Response(status_code=200)
-
 
 @router.patch(
     "/reviews/{review_id}",

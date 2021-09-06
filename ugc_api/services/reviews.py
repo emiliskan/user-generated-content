@@ -38,7 +38,6 @@ class UserReviewsService(BaseService):
 
     async def update(self, user_id: UUID, review_id: PydanticObjectId, review: Review):
         data = review.dict()
-        data["user_id"] = user_id
         await self.storage.update({"_id": review_id}, {"$set": data})
         return await self.get(review_id)
 
