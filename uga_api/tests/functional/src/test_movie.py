@@ -11,7 +11,8 @@ API_URL = 'movies/save_movie_progress'
     ],
 )
 @pytest.mark.asyncio
-async def test_save_movie_progress(movie_id, viewed_frame, make_get_request, auth):
+async def test_save_movie_progress(movie_id, viewed_frame,
+                                   make_get_request, auth):
 
     headers = {
         "Authorization": f"Bearer {auth}"
