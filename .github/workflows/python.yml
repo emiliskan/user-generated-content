@@ -53,7 +53,7 @@ jobs:
           cd uga_api
           pipenv install --system --deploy --skip-lock
           cd ..
-          pytest --html=reports/pytest-report/index.html
+          pytest uga_api/ --html=reports/pytest-report/index.html
 
       - name: Stop UGA API
         if: always()
