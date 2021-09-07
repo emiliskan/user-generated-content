@@ -11,12 +11,13 @@ orjson = "*"
 uvicorn = "*"
 bson = "*"
 motor = "*"
+sentry-sdk = "*"
+pyjwt = "*"
 
 [dev-packages]
 pytest = "*"
 pytest-cases = "*"
 pytest-asyncio = "*"
-sentry-sdk = "*"
 python-logstash = "*"
 
 [requires]

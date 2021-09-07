@@ -6,7 +6,7 @@ x-env: &x-env
 
 services:
   uga-api:
-    container_name: ugc-api
+    container_name: uga-api
     build:
       context: uga_api/
     volumes:
@@ -17,6 +17,18 @@ services:
     networks:
       - movies-network
     <<: *x-env
+
+  ugc-api:
+    container_name: ugc-api
+    build:
+      context: ugc_api/
+    volumes:
+      - ./ugc_api/:/app/
+    restart: unless-stopped
+    networks:
+      - movies-network
+    <<: *x-env
+
   etl:
     build:
       context: etl/
@@ -34,7 +46,7 @@ services:
     ports:
       - 5001:80
     depends_on:
-      - uga-api
+      - ugc-api
     networks:
       - movies-network
   logstash:
@@ -69,7 +81,7 @@ services:
       - /tmp/logs/nginx:/var/log/nginx:ro
       - ./logging/filebeat.yml:/usr/share/filebeat/filebeat.yml
     depends_on:
-      - uga-api
+      - ugc-api
       - nginx
       - logstash
       - elasticsearch
