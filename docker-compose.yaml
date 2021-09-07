@@ -12,6 +12,8 @@ services:
     volumes:
       - ./uga_api/:/app/
     restart: unless-stopped
+    ports:
+      - 8000:8000
     networks:
       - movies-network
     <<: *x-env
@@ -23,8 +25,6 @@ services:
     volumes:
       - ./ugc_api/:/app/
     restart: unless-stopped
-    ports:
-      - 8000:8000
     networks:
       - movies-network
     <<: *x-env
