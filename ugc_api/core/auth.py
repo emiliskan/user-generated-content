@@ -3,11 +3,10 @@ Auth integration
 """
 
 import jwt
+from core.config import JWT_SECRET_KEY, JWT_ALGORITHM
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-
-from core.config import JWT_SECRET_KEY,  JWT_ALGORITHM
-
 oauth_schema = HTTPBearer()
 
 
@@ -17,7 +16,6 @@ async def auth(authorization: HTTPAuthorizationCredentials = Depends(oauth_schem
                              JWT_SECRET_KEY,
                              algorithms=[JWT_ALGORITHM])
         user_id: str = payload.get("sub")
-
         if user_id is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="User id not found")
