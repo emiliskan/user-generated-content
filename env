@@ -17,4 +17,4 @@ MONGO_DB=ugc_db
 MONGO_COLLECTION=movies
 MONGO_USER=user1
 MONGO_PASS=aaaaaaaa
-MONGO_SSL_CA=C:\Users\Agamamedov\.mongodb\CA.pem
+MONGO_SSL_CA=/usr/local/share/ca-certificates/Yandex/YandexCA.crt
