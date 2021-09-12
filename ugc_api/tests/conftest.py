@@ -54,6 +54,11 @@ async def auth(make_post_request) -> str:
 
 
 @pytest.fixture
+async def headers(auth) -> dict:
+    return {"Authorization": f"Bearer {auth}"}
+
+
+@pytest.fixture
 def make_get_request(session):
     async def inner(url: str, params: dict = None, data: dict = None,
                     headers: dict = None) -> HTTPResponse:
