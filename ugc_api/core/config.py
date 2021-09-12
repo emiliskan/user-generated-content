@@ -18,7 +18,11 @@ MONGO_SSL_CA = os.getenv("MONGO_SSL_CA", "")
 MONGO_URL = f"mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST}/?replicaSet=rs01&authSource={MONGO_DB}"
 
 BACKOFF_FACTOR = float(os.getenv('BACKOFF_FACTOR', 0.5))
+
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+if not JWT_SECRET_KEY:
+    raise RuntimeError("Not found JWT_SECRET_KEY")
+
 JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 
 # LOGGING
