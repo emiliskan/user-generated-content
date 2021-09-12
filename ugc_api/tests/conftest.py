@@ -1,12 +1,13 @@
+import asyncio
+import time
 from dataclasses import dataclass
 
-import pytest
 import aiohttp
-import asyncio
-
+import jwt
+import pytest
 from multidict import CIMultiDictProxy
 
-import settings
+from settings import USER_ID, JWT_SECRET_KEY, JWT_ALGORITHM
 
 
 @dataclass
@@ -29,28 +30,12 @@ def event_loop():
 
 
 @pytest.fixture
-async def auth(make_post_request) -> str:
-    """
-    Authorize user in auth service
-    :param make_post_request:
-    :return: Access token
-    """
-    data = {
-        "username": "ugc_user",
-        "password": "asJDjDahJKjdHsd",
-        "email": "test_user@yandex.ru"
+async def auth() -> str:
+    playload = {
+        "sub": USER_ID,
+        "exp": time.time() + 100500
     }
-    url = f"{settings.AUTH_SERVICE_URL}/api/v1/user"
-    response = await make_post_request(url, data=data)
-
-    # if we already have user
-    if response.status != 200:
-        del data["email"]
-        url = f"{settings.AUTH_SERVICE_URL}/api/v1/auth"
-        response = await make_post_request(url, data=data)
-
-    assert response.status == 200, "something wrong with auth service."
-    return response.body["accessToken"]
+    return jwt.encode(playload, JWT_SECRET_KEY, JWT_ALGORITHM)
 
 
 @pytest.fixture
