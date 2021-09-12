@@ -1,6 +1,5 @@
 from uuid import UUID
-from pydantic import BaseModel
-from models.base import AbstractModel, FastJSONModel, PydanticObjectId
+from models.base import AbstractModel, FastJSONModel
 
 
 class MovieScore(AbstractModel):
@@ -9,12 +8,6 @@ class MovieScore(AbstractModel):
     score: int
 
 
-class CreateMovieScore(FastJSONModel):
-    movie_id: UUID
-    score: int
-
-
-class UpdateMovieScore(BaseModel):
-    id:  PydanticObjectId
+class MovieScoreQuery(FastJSONModel):
     movie_id: UUID
     score: int

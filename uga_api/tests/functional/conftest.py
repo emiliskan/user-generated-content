@@ -1,3 +1,5 @@
+import time
+
 import asyncio
 from dataclasses import dataclass
 
@@ -32,7 +34,8 @@ def event_loop():
 @pytest.fixture
 async def auth() -> str:
     playload = {
-        "user_id": USER_ID
+        "sub": USER_ID,
+        "exp": time.time() + 100500
     }
     return jwt.encode(playload, JWT_SECRET_KEY, JWT_ALGORITHM)
 
