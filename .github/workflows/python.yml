@@ -26,11 +26,6 @@ jobs:
       - name: Install dependencies for UGC
         run: |
           python -m pip install --upgrade pip
-          pip install wemake-python-styleguide flake8-html
-          pip install mypy lxml
-          pip install types-aiofiles types-certifi types-ujson
-          pip install pytest
-          pip install pytest-html
           pip install pipenv
           pipenv install
 
