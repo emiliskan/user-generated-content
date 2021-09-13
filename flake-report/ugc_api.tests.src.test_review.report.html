@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>flake8 violations: ugc_api/tests/src/test_review.py</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+<script>
+function bindHandler(link) {
+   var code = link.getAttribute('data-code');
+   var key = location.pathname + '#' + code;
+
+   var ul = link.parentNode.querySelector('.details');
+   if (sessionStorage[key] != 'open') {
+      ul.style.display = 'none';
+   }
+   link.addEventListener('click', function (event) {
+      if (!ul.style.display || ul.style.display == 'none') {
+         ul.style.display = 'block';
+         sessionStorage[key] = 'open';
+      } else {
+         ul.style.display = 'none';
+         sessionStorage[key] = 'closed';
+      }
+   });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+   var links = document.querySelectorAll('#index > li > a');
+   for (var i = 0; i < links.length; i++) {
+      bindHandler(links[i]);
+   }
+});
+</script>
+   </head>
+   <body>
+      <div id="masthead" class="sev-2"></div>
+      <div id="page">
+         <p id="srclink">
+            <a title="View full annotated source"
+               href="ugc_api.tests.src.test_review.source.html">
+               <img src="file.svg" alt="&#x2261;">
+            </a></p>
+         <h1>
+            <a href="index.html">
+               <img src="back.svg" alt="&#x2B05;">
+               ugc_api/tests/src/test_review.py
+            </a>
+         </h1>
+
+         <ul id="index">
+         
+         <li>
+            <a data-code="WPS432">
+               <span class="count sev-2">
+                  5
+               </span>
+               <strong>WPS432:</strong> Found magic number: 201
+               
+                  (and 2 similar)
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <p>Found magic number: 201:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l22">
+                  <tt><i>22</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">201</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t create review.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Found magic number: 200:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l33">
+                  <tt><i>33</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t get review list.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Found magic number: 200:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l47">
+                  <tt><i>47</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t update review.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Found magic number: 200:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l55">
+                  <tt><i>55</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t delete review.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Found magic number: 404:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l59">
+                  <tt><i>59</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="C812">
+               <span class="count sev-2">
+                  4
+               </span>
+               <strong>C812:</strong> missing trailing comma
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l14">
+                  <tt><i>14</i>         <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;New text.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l19">
+                  <tt><i>19</i>         <span class="n">headers</span><span class="o">=</span><span class="n">headers</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l40">
+                  <tt><i>40</i>         <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;New text.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l45">
+                  <tt><i>45</i>         <span class="n">headers</span><span class="o">=</span><span class="n">headers</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="WPS110">
+               <span class="count sev-2">
+                  3
+               </span>
+               <strong>WPS110:</strong> Found wrong variable name: data
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l11">
+                  <tt><i>11</i>     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l27">
+                  <tt><i>27</i>     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l38">
+                  <tt><i>38</i>     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="WPS317">
+               <span class="count sev-2">
+                  3
+               </span>
+               <strong>WPS317:</strong> Found incorrect multi-line parameters
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l51">
+                  <tt><i>51</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_delete_review</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_delete_request</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l53">
+                  <tt><i>53</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_delete_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">REVIEW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l57">
+                  <tt><i>57</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">REVIEW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="WPS319">
+               <span class="count sev-2">
+                  3
+               </span>
+               <strong>WPS319:</strong> Found bracket in wrong position
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l52">
+                  <tt><i>52</i>                              <span class="n">make_get_request</span><span class="p">):</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l54">
+                  <tt><i>54</i>                                          <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l58">
+                  <tt><i>58</i>                                       <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="Q000">
+               <span class="count sev-3">
+                  18
+               </span>
+               <strong>Q000:</strong> Double quotes found but single quotes preferred
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <p>Double quotes found but single quotes preferred:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l4">
+                  <tt><i>4</i> <span class="n">API_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_SERVICE_URL</span><span class="si">}</span><span class="s2">/api/</span><span class="si">{</span><span class="n">API</span><span class="si">}</span><span class="s2">/reviews&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l6">
+                  <tt><i>6</i> <span class="n">REVIEW_ID</span> <span class="o">=</span> <span class="s2">&quot;613fbddfa3ff7e7f63a81463&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l12">
+                  <tt><i>12</i>         <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">REVIEW_ID</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred (in 2 places):</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l13">
+                  <tt><i>13</i>         <span class="s2">&quot;movie_id&quot;</span><span class="p">:</span> <span class="s2">&quot;3fa85f64-5717-4562-b3fc-2c963f66afa6&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred (in 2 places):</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l14">
+                  <tt><i>14</i>         <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;New text.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred (in 3 places):</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l27">
+                  <tt><i>27</i>     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l29">
+                  <tt><i>29</i>         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred (in 2 places):</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l39">
+                  <tt><i>39</i>         <span class="s2">&quot;movie_id&quot;</span><span class="p">:</span> <span class="s2">&quot;0cbc2d7c-fcb0-486d-89e8-905c38a196ed&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred (in 2 places):</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l40">
+                  <tt><i>40</i>         <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;New text.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l43">
+                  <tt><i>43</i>         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">REVIEW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l53">
+                  <tt><i>53</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_delete_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">REVIEW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Double quotes found but single quotes preferred:</p>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l57">
+                  <tt><i>57</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">REVIEW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="S101">
+               <span class="count sev-3">
+                  5
+               </span>
+               <strong>S101:</strong> Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l22">
+                  <tt><i>22</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">201</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t create review.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l33">
+                  <tt><i>33</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t get review list.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l47">
+                  <tt><i>47</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t update review.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l55">
+                  <tt><i>55</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t delete review.&quot;</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l59">
+                  <tt><i>59</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="D103">
+               <span class="count sev-3">
+                  4
+               </span>
+               <strong>D103:</strong> Missing docstring in public function
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l10">
+                  <tt><i>10</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_create_review</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_post_request</span><span class="p">):</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l26">
+                  <tt><i>26</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_get_reviews</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_get_request</span><span class="p">):</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l37">
+                  <tt><i>37</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_update_review</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_patch_request</span><span class="p">):</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l51">
+                  <tt><i>51</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_delete_review</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_delete_request</span><span class="p">,</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="I005">
+               <span class="count sev-3">
+                  1
+               </span>
+               <strong>I005:</strong> isort found an unexpected missing import
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="ugc_api.tests.src.test_review.source.html#l3">
+                  <tt><i>3</i> &nbsp;</tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         </ul>
+      </div>
+   </body>
+</html>

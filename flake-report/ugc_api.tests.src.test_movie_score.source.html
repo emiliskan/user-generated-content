@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>ugc_api/tests/src/test_movie_score.py - flake8 annotated source</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <div id="masthead" class="sev-2"></div>
+      <div id="page">
+         <h1>
+            <a href="ugc_api.tests.src.test_movie_score.report.html">
+               <img src="back.svg" alt="&#x2B05;">
+               ugc_api/tests/src/test_movie_score.py source
+            </a>
+         </h1>
+
+         <div id="doc">
+            <div id="l1"
+               class="code sev- "><tt><i>1</i> <span class="kn">import</span> <span class="nn">pytest</span></tt>
+            </div>
+            <div id="l2"
+               class="code sev- "><tt><i>2</i> <span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">API_SERVICE_URL</span><span class="p">,</span> <span class="n">API</span></tt>
+            </div>
+            <div id="l3"
+               class="code sev- "><tt><i>3</i> &nbsp;</tt>
+            </div>
+            <div id="l4"
+               class="code sev- "><tt><i>4</i> <span class="n">API_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_SERVICE_URL</span><span class="si">}</span><span class="s2">/api/</span><span class="si">{</span><span class="n">API</span><span class="si">}</span><span class="s2">/scores/movie_score&quot;</span></tt>
+            </div>
+            <div id="l5"
+               class="code sev- "><tt><i>5</i> &nbsp;</tt>
+            </div>
+            <div id="l6"
+               class="code sev- "><tt><i>6</i> <span class="n">MOVIE_ID</span> <span class="o">=</span> <span class="s2">&quot;3fa85f64-5717-4562-b3fc-2c963f66afa6&quot;</span></tt>
+            </div>
+            <div id="l7"
+               class="code sev- "><tt><i>7</i> &nbsp;</tt>
+            </div>
+            <div id="l8"
+               class="code sev- "><tt><i>8</i> &nbsp;</tt>
+            </div>
+            <div id="l9"
+               class="code sev- "><tt><i>9</i> <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span></tt>
+            </div>
+            <div id="l10"
+               class="code sev- "><tt><i>10</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_create_movie_score</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_post_request</span><span class="p">):</span></tt>
+            </div>
+            <div id="l11"
+               class="code sev- "><tt><i>11</i> &nbsp;</tt>
+            </div>
+            <div id="l12"
+               class="code sev- "><tt><i>12</i>     <span class="n">score_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;movie_id&quot;</span><span class="p">:</span> <span class="n">MOVIE_ID</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span></tt>
+            </div>
+            <div id="l13"
+               class="code sev- "><tt><i>13</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">score_info</span><span class="p">,</span></tt>
+            </div>
+            <div id="l14"
+               class="code sev- "><tt><i>14</i>                                        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span></tt>
+            </div>
+            <div id="l15"
+               class="code sev- "><tt><i>15</i> &nbsp;</tt>
+            </div>
+            <div id="l16"
+               class="code sev- "><tt><i>16</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">201</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t create movie score.&quot;</span></tt>
+            </div>
+            <div id="l17"
+               class="code sev- "><tt><i>17</i>     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t get movie score.&quot;</span></tt>
+            </div>
+            <div id="l18"
+               class="code sev- "><tt><i>18</i> &nbsp;</tt>
+            </div>
+            <div id="l19"
+               class="code sev- "><tt><i>19</i> &nbsp;</tt>
+            </div>
+            <div id="l20"
+               class="code sev- "><tt><i>20</i> <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span></tt>
+            </div>
+            <div id="l21"
+               class="code sev- "><tt><i>21</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_get_movie_score</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_get_request</span><span class="p">):</span></tt>
+            </div>
+            <div id="l22"
+               class="code sev- "><tt><i>22</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">MOVIE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l23"
+               class="code sev- "><tt><i>23</i>                                       <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span></tt>
+            </div>
+            <div id="l24"
+               class="code sev- "><tt><i>24</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span></tt>
+            </div>
+            <div id="l25"
+               class="code sev- "><tt><i>25</i> &nbsp;</tt>
+            </div>
+            <div id="l26"
+               class="code sev- "><tt><i>26</i> &nbsp;</tt>
+            </div>
+            <div id="l27"
+               class="code sev- "><tt><i>27</i> <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span></tt>
+            </div>
+            <div id="l28"
+               class="code sev- "><tt><i>28</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_update_movie_score</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_patch_request</span><span class="p">):</span></tt>
+            </div>
+            <div id="l29"
+               class="code sev- "><tt><i>29</i>     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;movie_id&quot;</span><span class="p">:</span> <span class="n">MOVIE_ID</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">}</span></tt>
+            </div>
+            <div id="l30"
+               class="code sev- "><tt><i>30</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_patch_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span></tt>
+            </div>
+            <div id="l31"
+               class="code sev- "><tt><i>31</i>                                         <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span></tt>
+            </div>
+            <div id="l32"
+               class="code sev- "><tt><i>32</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t update movie score.&quot;</span></tt>
+            </div>
+            <div id="l33"
+               class="code sev- "><tt><i>33</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t change movie score.&quot;</span></tt>
+            </div>
+            <div id="l34"
+               class="code sev- "><tt><i>34</i> &nbsp;</tt>
+            </div>
+            <div id="l35"
+               class="code sev- "><tt><i>35</i> &nbsp;</tt>
+            </div>
+            <div id="l36"
+               class="code sev- "><tt><i>36</i> <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span></tt>
+            </div>
+            <div id="l37"
+               class="code sev- "><tt><i>37</i> <span class="k">async</span> <span class="k">def</span> <span class="nf">test_delete_movie_score</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">make_delete_request</span><span class="p">,</span></tt>
+            </div>
+            <div id="l38"
+               class="code sev- "><tt><i>38</i>                                   <span class="n">make_get_request</span><span class="p">):</span></tt>
+            </div>
+            <div id="l39"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        WPS317
+                     </span>
+                     Found incorrect multi-line parameters</li>
+               
+                  <li>
+                     <span class="count sev-3">
+                        Q000
+                     </span>
+                     Double quotes found but single quotes preferred</li>
+               
+               </ul><tt><i>39</i>     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_delete_request</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">MOVIE_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l40"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        WPS319
+                     </span>
+                     Found bracket in wrong position</li>
+               
+               </ul><tt><i>40</i>                                          <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span></tt>
+            </div>
+            <div id="l41"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-3">
+                        S101
+                     </span>
+                     Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.</li>
+               
+                  <li>
+                     <span class="count sev-2">
+                        WPS432
+                     </span>
+                     Found magic number: 200</li>
+               
+               </ul><tt><i>41</i>     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t remove movie score.&quot;</span></tt>
+            </div>
+            
+         </div>
+      </div>
+   </body>
+</html>
