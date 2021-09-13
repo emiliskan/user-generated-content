@@ -42,7 +42,7 @@ class UserReviewScoresService(BaseService):
         new_rating = inc_avg_mean(old_rating, scores_quality, data["score"])
 
         review_data = {
-            "$addToSet": {"scores": created["id"]},
+            "$addToSet": {"scores": created["_id"]},
             "$inc": {"scores_quality": 1},
             "$set": {"rating": new_rating}
         }

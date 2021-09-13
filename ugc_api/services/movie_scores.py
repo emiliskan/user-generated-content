@@ -31,7 +31,7 @@ class MovieScoresService:
             "user_id": user_id,
             "movie_id": movie_id
         }
-        print(spec)
+
         result = await self.scores.get(spec)
         return result
 

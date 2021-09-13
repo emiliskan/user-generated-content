@@ -32,7 +32,8 @@ async def get_reviews(
 @router.post(
     "/reviews",
     description="Create review.",
-    response_model=Review
+    response_model=Review,
+    status_code=201
 )
 async def create_review(
         review: Review,

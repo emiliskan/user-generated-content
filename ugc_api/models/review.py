@@ -7,6 +7,7 @@ from pydantic import Field
 
 
 class Review(AbstractModel):
+    id: PydanticObjectId = PydanticObjectId()
     user_id: Optional[UUID]
     movie_id: UUID
     text: str = Field(max_length=1000)

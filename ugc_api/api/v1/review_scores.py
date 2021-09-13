@@ -16,7 +16,12 @@ logger = logging.getLogger(__name__)
 auth_scheme = HTTPBearer()
 
 
-@router.post("/reviews/scores/", response_model=ReviewScore, description="Add score to review.")
+@router.post(
+    "/reviews/scores/",
+    response_model=ReviewScore,
+    description="Add score to review.",
+    status_code=201
+)
 async def create_review_score(
         review_score: ReviewScore,
         service: UserReviewScoresService = Depends(get_user_review_scores_service),
