@@ -8,7 +8,7 @@ KAFKA_SASL_PLAIN_USERNAME=ucg_api
 KAFKA_SSL_CAFILE=/usr/local/share/ca-certificates/Yandex/YandexCA.crt
 
 # AUTH
-JWT_SECRET_KEY=strong-secret
+JWT_SECRET_KEY=strong_secret
 
 # UGA_API
 MONGO_HOST=rc1a-avvodtz9jom0y2ao.mdb.yandexcloud.net

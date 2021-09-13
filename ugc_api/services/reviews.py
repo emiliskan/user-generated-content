@@ -33,20 +33,22 @@ class UserReviewsService(BaseService):
     async def add(self, user_id: str, review: Review):
         data = review.dict()
         data["user_id"] = user_id
+        data["_id"] = PydanticObjectId(data["id"])
         created = await self.storage.create(data)
         return await self.get(created.inserted_id)
 
     async def update(self, user_id: str, review_id: PydanticObjectId, review: Review):
-        review = await self.get(review_id)
+        old_review = await self.get(review_id)
 
-        if not review["user_id"] == user_id:
+        if not old_review["user_id"] == user_id:
             raise NotAllowed
 
         data = review.dict()
+        data["user_id"] = user_id
         await self.storage.update({"_id": review_id}, {"$set": data})
         return await self.get(review_id)
 
-    async def remove(self, user_id: UUID, review_id: PydanticObjectId):
+    async def remove(self, user_id: str, review_id: PydanticObjectId):
         review = await self.get(review_id)
 
         if not review["user_id"] == user_id:

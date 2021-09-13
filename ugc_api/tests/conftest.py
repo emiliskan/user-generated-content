@@ -31,11 +31,11 @@ def event_loop():
 
 @pytest.fixture
 async def auth() -> str:
-    playload = {
+    payload = {
         "sub": USER_ID,
         "exp": time.time() + 100500
     }
-    return jwt.encode(playload, JWT_SECRET_KEY, JWT_ALGORITHM)
+    return jwt.encode(payload, JWT_SECRET_KEY, JWT_ALGORITHM)
 
 
 @pytest.fixture

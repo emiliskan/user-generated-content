@@ -39,7 +39,3 @@ async def test_delete_movie_score(headers, make_delete_request,
     response = await make_delete_request(f"{API_URL}/{MOVIE_ID}",
                                          headers=headers)
     assert response.status == 200, "Couldn't remove movie score."
-
-    response = await make_get_request(f"{API_URL}/{MOVIE_ID}",
-                                      headers=headers)
-    assert response.status == 404
